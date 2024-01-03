@@ -1,0 +1,29 @@
+/* Temp */
+
+.navigator {
+    width: 4.5rem;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 1rem;
+}
+
+.navigator:hover {
+    background-color: rgb(55, 65, 81);
+}
+
+.logoutBtn {
+    background-color: #1a202c;
+    color: #fff;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 1rem;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.logoutBtn:hover {
+    background-color: #4b5563;
+}

@@ -1,0 +1,34 @@
+import Image from "next/image";
+
+export const metadata = {
+    title: "Contact Page",
+    description: "Contact description",
+};
+
+const Contact = () => {
+  return (
+    <div className="min-h-[80vh] flex items-center lg:flex-row flex-col justify-center gap-20 bg-gray-900 text-white p-4">
+      <div className="sm:w-[28rem] sm:h-[25rem] w-80 h-80 relative mx-20">
+        <Image src="/contact.png" alt="" fill className="" />
+      </div>
+      <div className="flex-1 xl:px-20 px-2">
+        <form action="" className="flex flex-col gap-5">
+          <input type="text" placeholder="Name and Surname" className="p-3 rounded-md border-none outline-none bg-gray-800 text-white"/>
+          <input type="text" placeholder="Email Address" className="p-3 rounded-md border-none outline-none bg-gray-800 text-white"/>
+          <input type="text" placeholder="Phone Number (Optional)" className="p-3 rounded-md border-none outline-none bg-gray-800 text-white"/>
+          <textarea
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="Message"
+            className="p-3 rounded-md border-none outline-none bg-gray-800 text-white"
+          ></textarea>
+          <button className="p-3 bg-blue-800 text-white font-semibold border-none rounded-md hover:bg-blue-600">Send</button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Contact;
