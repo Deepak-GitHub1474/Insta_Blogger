@@ -26,25 +26,27 @@ import { connectDb } from "./utils";
 //     return user;
 // };
 
+
+
 // <============ MongoDB ============> //
 
 // Get All posts
 export const getPosts = async () => {
     try {
         connectDb();
-      const posts = await Post.find();
-      return posts;
+        const posts = await Post.find();
+        return posts;
     } catch (error) {
-      console.log(error);
-      throw new Error("Error while fetching all posts!");
+        console.log(error);
+        throw new Error("Error while fetching all posts!");
     }
-  };
+};
 
 // Get single post
 export const getPost = async (slug) => {
     try {
         connectDb();
-        const post = await Post.findOne({slug});
+        const post = await Post.findOne({ slug });
         return post;
     } catch (error) {
         console.log(error);
@@ -54,21 +56,21 @@ export const getPost = async (slug) => {
 
 // Get all the users
 export const getUsers = async () => {
-  try {
-    connectDb();
-    const users = await User.find();
-    return users;
-  } catch (err) {
-    console.log(err);
-    throw new Error("Error while fetching all users!");
-  }
+    try {
+        connectDb();
+        const users = await User.find();
+        return users;
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error while fetching all users!");
+    }
 };
 
 // Get single user
 export const getUser = async (id) => {
     try {
         connectDb();
-        const user = await User.findById({id});
+        const user = await User.findById(id);
         return user;
     } catch (error) {
         console.log(error);

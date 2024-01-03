@@ -1,27 +1,20 @@
 import PostCard from "@/components/PostCard/PostCard";
-import { getPosts } from "@/components/lib/data";
+import { getPosts, getUsers } from "@/components/lib/data";
 import Link from "next/link";
 
-// const getData = async () => {
-//     const res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
-//     const data = await res.json();
-//     return data;
-// }
-
 const Blog = async ({params, searchParams}) => {
-    // console.log("Params", params, "searchParams",searchParams); // Testing 
-    
-    // const post = await getData(); // Fetching data using API
-    // console.log(post);
 
-    const post = await getPosts();
-    console.log(post);
+    const posts = await getPosts();
+    // console.log(posts);
+
+    // const users = await getUsers();
+    // console.log(users);
 
     return (
         <div className="min-h-[80vh] bg-gray-900 text-white">
-            {/* <PostCard /> */}
+            <PostCard posts = {posts}/>
 
-            {post.map(blog => (
+            {/* {posts.map(blog => (
                 <div className="flex items-center justify-center flex-col" key={blog.id}>
                     <div className=" max-w-[550px] w-[90vw] h-[500px] bg-gray-700 text-white my-4 p-4 pt-0 rounded-lg relative overflow-hidden">
                         <div className="flex items-center justify-between">
@@ -44,7 +37,7 @@ const Blog = async ({params, searchParams}) => {
                             </ul>}
                         </div>
                         <div className="flex justify-center mt-2">
-                            <img src="https://img.freepik.com/premium-photo/cute-little-girl-smiling-conversational-chatbot-robot_124507-62437.jpg" alt="blog-cover" className="w-[250px] h-[160px]" />
+                            <img src={blog.img} alt="blog-cover" className="w-[250px] h-[160px]" />
                         </div>
                         <div className="mt-2 text-center">
                             <b>{blog.title}</b>
@@ -53,12 +46,12 @@ const Blog = async ({params, searchParams}) => {
                         <div className="mt-8">
                             <p>{blog.description}</p>
                         </div>
-                        <Link href={`/blogs/${post._id}`}>
+                        <Link href={`/blogs/${blog.slug}`}>
                             <button className="bg-gray-400 text-black font-bold absolute bottom-0 left-0 right-0 p-2 hover:bg-gray-300">Read</button>
                         </Link>
                     </div>
                 </div>
-            ))}
+            ))} */}
         </div>
     );
 }

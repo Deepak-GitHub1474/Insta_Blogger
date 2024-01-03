@@ -31,7 +31,6 @@ const userSchema = mongoose.Schema({
 }, { timestamps: true });
 
 // Post Schema
-
 const postSchema = mongoose.Schema({
     title: {
         type: String,
