@@ -1,11 +1,32 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
-import { deleteBlog } from "../lib/action";
+import { useEffect, useState } from "react";
+// import { deleteBlog } from "../lib/action";
+
+const getData = async () => {
+    try {
+        const res = await fetch("http://localhost:3000/api/blog");
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Error while fetching all posts!");
+    }
+}
 
 const PostCard = ({posts, users}) => {
 
+    const [data, setData] = useState([]);
     const [isOpen, setIsOpen] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await getData();
+            setData(data)
+        }
+        fetchData();
+    }, [])
+    console.log(data);
 
     const handleClick = (postId) => {
         if (isOpen === postId) {
@@ -15,11 +36,9 @@ const PostCard = ({posts, users}) => {
         }
     }
 
-    // console.log("Users--->", users);
-
   return (
     <>
-      {posts.map(blog => (
+      {data.map(blog => (
             <div className="flex items-center justify-center flex-col" key={blog.userId}>
                 <div className=" max-w-[550px] w-[90vw] h-[500px] bg-gray-700 text-white my-4 p-4 pt-0 rounded-lg relative overflow-hidden">
                     <div className="flex items-center justify-between">
@@ -38,7 +57,8 @@ const PostCard = ({posts, users}) => {
                                 <li className="text-sm font-semibold p-[5px] hover:bg-gray-300 hover:w-[98%] rounded-md cursor-pointer">Edit</li>
                             </Link>
                             <div className="w-[98%] border-t-[0.5px] border-stone-500"></div>
-                            <li className="text-sm font-semibold p-[5px] hover:bg-gray-300 hover:w-[98%] rounded-md cursor-pointer" onClick={deleteBlog(blog._id)}>Delete</li>
+                            {/* Fix delete   onClick={deleteBlog(blog._id)}*/}
+                            <li className="text-sm font-semibold p-[5px] hover:bg-gray-300 hover:w-[98%] rounded-md cursor-pointer">Delete</li>
                         </ul>}
                     </div>
                     <div className="flex justify-center mt-2">
