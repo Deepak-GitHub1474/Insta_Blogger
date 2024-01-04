@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const PostCard = ({posts}) => {
+const PostCard = ({posts, users}) => {
 
     const [isOpen, setIsOpen] = useState(null);
 
@@ -14,7 +14,7 @@ const PostCard = ({posts}) => {
         }
     }
 
-    console.log(posts);
+    // console.log("Users--->", users);
 
   return (
     <>
@@ -45,7 +45,7 @@ const PostCard = ({posts}) => {
                     </div>
                     <div className="mt-2 text-center">
                         <b>{blog?.title}</b>
-                        <p className="absolute right-2 text-gray-400 font-serif font-extralight text-sm">Published: {`12-01-2024`}</p> 
+                        <p className="absolute right-2 text-gray-400 font-serif font-extralight text-sm">Published: {blog?.publish.toString().slice(4, 16)}</p> 
                     </div>
                     <div className="mt-8">
                         <p>{blog?.description}</p>

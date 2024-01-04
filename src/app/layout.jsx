@@ -3,7 +3,11 @@ import Footer from '@/components/Footer/Footer'
 import './globals.css'
 
 export const metadata = {
-  title: 'Staic Page || NEXT.js',
+  title: {
+    default: 'Home Page || NEXT.Js',
+    template: '%s || NEXT.Js'
+  },
+  description: 'Next.Js description'
 }
 
 export default function RootLayout({ children }) {

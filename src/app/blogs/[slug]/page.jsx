@@ -1,22 +1,38 @@
 import { getPost, getUser } from "@/components/lib/data";
 import Image from "next/image";
 
+// export const metadata = {
+//     title: "Single Blog Page",
+//     description: "About description",
+// };
+
+// Dynamic metadata
+export const generateMetadata = async ({params}) => {
+    const {slug} = params;
+    const post = await getPost(slug);
+
+    return {
+        title: post.title,
+        description: post.description,
+    }
+    
+};
+
 const BlogSinglePage = async ({params}) => {
     const {slug} = params;
 
     const post = await getPost(slug);
-    // const user = await getUser(slug);
-    const user = null;
+    const user = await getUser(slug);
 
     return (
         <div className="min-h-[80vh] bg-gray-900 text-white p-4 flex flex-col gap-14">
             <div className="flex flex-col items-center justify-center">
                 <div className="w-32 h-32 relative rounded-full overflow-hidden object-cover">
-                    <Image src={user === null ?"":user.img} fill alt="Author-Image"/>
+                    <Image src={user.img ? user.img : "/avatar.png"} fill alt="Author-Image" />
                 </div>
                 <div className="mt-2">
-                    <h3 className=" font-semibold font-serif">Author: {user === null ?"Anonymous" : user?.username[0].toUpperCase()+user?.username.slice(1)}</h3>
-                    <p className="text-gray-400 font-serif font-extralight text-sm mt-1">Published: {`12-01-2024`}</p>
+                    <h3 className=" font-semibold font-serif">Author: {user.username ? user?.username[0].toUpperCase()+user?.username.slice(1) : "Anonymous"}</h3>
+                    <p className="text-gray-400 font-serif font-extralight text-sm mt-1">Published: {post?.publish}</p>
                 </div>
             </div>
             <div className="flex flex-col lg:flex-row items-center lg:gap-20 gap-10">
