@@ -13,11 +13,25 @@ export const generateMetadata = async ({params}) => {
     
 };
 
+const getData = async (slug) => {
+    try {
+        const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
+        const data = await res.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Something went wrong while fetching single blog");
+    }
+}
+
 const BlogSinglePage = async ({params}) => {
     const {slug} = params;
 
-    const post = await getPost(slug);
+    // const post = await getPost(slug);
     const user = await getUser(slug);
+
+    const post = await getData(slug);
 
     return (
         <div className="min-h-[80vh] bg-gray-900 text-white p-4 flex flex-col gap-14">
