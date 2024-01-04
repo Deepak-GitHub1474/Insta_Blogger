@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { deleteBlog } from "../lib/action";
 
 const PostCard = ({posts, users}) => {
 
@@ -26,18 +27,18 @@ const PostCard = ({posts, users}) => {
                             <div>Author</div>
                             <div className="w-[5px] h-[5px] rounded-full bg-gray-400 mt-1"></div>
                         </div>
-                        <div className="cursor-pointer flex gap-[6px] p-1" onClick={() => handleClick(blog.userId)}>
+                        <div className="cursor-pointer flex gap-[6px] p-1" onClick={() => handleClick(blog._id)}>
                             <div className="w-2 h-2 rounded-full bg-white"></div>
                             <div className="w-2 h-2 rounded-full bg-white"></div>
                             <div className="w-2 h-2 rounded-full bg-white"></div>
                         </div>
                         
-                        {isOpen === blog.userId && <ul className="w-[120px] bg-gray-400 text-black rounded-md absolute top-8 right-[2px] overflow-hidden">
+                        {isOpen === blog._id && <ul className="w-[120px] bg-gray-400 text-black rounded-md absolute top-8 right-[2px] overflow-hidden">
                             <Link href="" className="Link">
                                 <li className="text-sm font-semibold p-[5px] hover:bg-gray-300 hover:w-[98%] rounded-md cursor-pointer">Edit</li>
                             </Link>
                             <div className="w-[98%] border-t-[0.5px] border-stone-500"></div>
-                            <li className="text-sm font-semibold p-[5px] hover:bg-gray-300 hover:w-[98%] rounded-md cursor-pointer">Delete</li>
+                            <li className="text-sm font-semibold p-[5px] hover:bg-gray-300 hover:w-[98%] rounded-md cursor-pointer" onClick={deleteBlog(blog._id)}>Delete</li>
                         </ul>}
                     </div>
                     <div className="flex justify-center mt-2">
