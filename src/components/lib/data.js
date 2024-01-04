@@ -1,34 +1,6 @@
 import { Post, User } from "./models";
 import { connectDb } from "./utils";
-// import { unstable_noStore as noStore } from "next/cache";
-
-
-// TEMPORARY Local DB
-// const users = [
-//   { id: 1, name: "Deepak Chaudhary" },
-//   { id: 2, name: "Gaurv Kumar" },
-// ];
-
-// const posts = [
-//   { id: 1, title: "Post 1", body: "......", userId: 1 },
-//   { id: 2, title: "Post 2", body: "......", userId: 1 },
-//   { id: 3, title: "Post 3", body: "......", userId: 2 },
-//   { id: 4, title: "Post 4", body: "......", userId: 2 },
-// ];
-
-// export const getPosts = async (id) => {
-//     const post = posts.find(post => post.id === parseInt(id));
-//     return post;
-// };
-
-// export const getUsers = async (id) => {
-//     const user = users.find(user => user.id === parseInt(id));
-//     return user;
-// };
-
-
-
-// <============ MongoDB ============> //
+import { unstable_noStore as noStore } from "next/cache";
 
 // Get All posts
 export const getPosts = async () => {
@@ -68,6 +40,9 @@ export const getUsers = async () => {
 
 // Get single user
 export const getUser = async (id) => {
+    
+    noStore();  // Not cashed to get the refresh data
+
     try {
         connectDb();
         const user = await User.findById(id);

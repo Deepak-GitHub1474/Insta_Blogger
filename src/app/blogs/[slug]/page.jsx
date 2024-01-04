@@ -1,11 +1,6 @@
 import { getPost, getUser } from "@/components/lib/data";
 import Image from "next/image";
 
-// export const metadata = {
-//     title: "Single Blog Page",
-//     description: "About description",
-// };
-
 // Dynamic metadata
 export const generateMetadata = async ({params}) => {
     const {slug} = params;
@@ -32,7 +27,7 @@ const BlogSinglePage = async ({params}) => {
                 </div>
                 <div className="mt-2">
                     <h3 className=" font-semibold font-serif">Author: {user.username ? user?.username[0].toUpperCase()+user?.username.slice(1) : "Anonymous"}</h3>
-                    <p className="text-gray-400 font-serif font-extralight text-sm mt-1">Published: {post?.publish}</p>
+                    <p className="text-gray-400 font-serif font-extralight text-sm mt-1">Published: {post?.createdAt.toString().slice(4, 16)}</p>
                 </div>
             </div>
             <div className="flex flex-col lg:flex-row items-center lg:gap-20 gap-10">

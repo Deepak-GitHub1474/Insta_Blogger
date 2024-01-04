@@ -45,7 +45,7 @@ const PostCard = ({posts, users}) => {
                     </div>
                     <div className="mt-2 text-center">
                         <b>{blog?.title}</b>
-                        <p className="absolute right-2 text-gray-400 font-serif font-extralight text-sm">Published: {blog?.publish.toString().slice(4, 16)}</p> 
+                        <p className="absolute right-2 text-gray-400 font-serif font-extralight text-sm">Published: {blog?.createdAt.toString().slice(4, 16)}</p> 
                     </div>
                     <div className="mt-8">
                         <p>{blog?.description}</p>
