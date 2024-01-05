@@ -4,18 +4,10 @@ import { handleGithubLogin, login } from "@/lib/action";
 import Link from "next/link";
 import Image from "next/image";
 import { useFormState } from "react-dom";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 const LoginForm = () => {
 
     const [state, formAction] = useFormState(login, undefined);
-
-    // const router = useRouter();
-
-    // useEffect(() => {
-    //     state?.success && router.push("/");
-    // },[])
 
     return (
         <div className="flex flex-col gap-6 sm:w-[500px] w-[95vw] bg-gray-700 pb-10 pt-8 px-2 rounded-lg shadow-[0_5px_5px_white] relative overflow-hidden">
