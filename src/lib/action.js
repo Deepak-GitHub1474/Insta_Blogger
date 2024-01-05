@@ -4,8 +4,9 @@ import { revalidatePath } from "next/cache";
 import { Post, User } from "./models";
 import { connectDb } from "./utils";
 import { signIn, signOut } from "./auth";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
+// Add blog
 export const addBlog = async (formData) => {
 
     const {title, description, img, userId, slug} = Object.fromEntries(formData);
@@ -22,11 +23,11 @@ export const addBlog = async (formData) => {
         });
         await newPost.save();
         console.log("New blog added to DB");
-        revalidatePath("/blog"); //To tell next.js added new blog and show fresh data
+        revalidatePath("/blog");
 
     } catch (error) {
         console.log(error);
-        return ("Error while adding new blog!");
+        return {error: "Error while adding new blog!"};
     }
 }
 
@@ -42,20 +43,8 @@ export const deleteBlog = async (formData) => {
 
     } catch (error) {
         console.log(error);
-        return ("Something went wrong while deleting blog!");
+        return {error: "Something went wrong while deleting blog!"};
     }
-}
-
-// Login using github account
-export const handleGithubLogin = async () =>{
-    "use server";
-    await signIn("github");
-}
-
-// Logout
-export const handleLogout = async () =>{
-    "use server";
-    await signOut();
 }
 
 // Signup
@@ -64,7 +53,7 @@ export const signup = async (formData) => {
 
     if (password !== confirmPassword) {
         console.log("password & confirmPassword is not same!");
-        return;
+        return {error: "password & confirmPassword is not same!"};
     }
 
     try {
@@ -74,7 +63,7 @@ export const signup = async (formData) => {
 
         if (user) {
             console.log("User already exist with this email!");
-            return;
+            return{error: "User already exist with this email!"};
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -90,6 +79,33 @@ export const signup = async (formData) => {
         
     } catch (error) {
         console.log(error);
-        return ("Error while signup new user!");
+        return {error: "Error while signup new user!"};
     }
 }
+
+// Login using github account
+export const handleGithubLogin = async () =>{
+    "use server";
+    await signIn("github");
+}
+
+// Login using credential
+export const login = async (formData) => {
+    const {email, password} = Object.fromEntries(formData);
+
+    try {
+
+        await signIn("credentials", {email, password});
+        
+    } catch (error) {
+        console.log(error);
+        return {error: "Error while login using credential!"};
+    }
+}
+
+// Logout
+export const handleLogout = async () =>{
+    "use server";
+    await signOut();
+}
+
