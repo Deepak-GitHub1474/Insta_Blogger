@@ -33,7 +33,7 @@ const Header = ({session}) => {
                         <button className="bg-gray-900 hover:hover:bg-gray-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl">Logout</button>
                     </form>
                 </div> :
-                <Link href="auth/login">
+                <Link href="/auth/login">
                     <button className="bg-gray-900 hover:hover:bg-gray-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl">Login</button>
                 </Link>
             }

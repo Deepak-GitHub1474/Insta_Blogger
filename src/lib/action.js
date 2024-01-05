@@ -48,12 +48,12 @@ export const deleteBlog = async (formData) => {
 }
 
 // Signup
-export const signup = async (formData) => {
+export const signup = async (previousState, formData) => {
     const {username, email, password, confirmPassword} = Object.fromEntries(formData);
 
     if (password !== confirmPassword) {
-        console.log("password & confirmPassword is not same!");
-        return {error: "password & confirmPassword is not same!"};
+        console.log("password & confirmPassword do not match!");
+        return {error: "password & confirmPassword do not match!"};
     }
 
     try {
@@ -62,8 +62,8 @@ export const signup = async (formData) => {
         const user = await User.findOne({email});
 
         if (user) {
-            console.log("User already exist with this email!");
-            return{error: "User already exist with this email!"};
+            console.log("User already exist");
+            return{error: "User already exist"};
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -74,8 +74,10 @@ export const signup = async (formData) => {
             email: email,
             password: hashedPassword,
         });
+
         await newUser.save();
         console.log("New user added!");
+        return {success: true};
         
     } catch (error) {
         console.log(error);
@@ -90,16 +92,20 @@ export const handleGithubLogin = async () =>{
 }
 
 // Login using credential
-export const login = async (formData) => {
+export const login = async (previousState, formData) => {
     const {email, password} = Object.fromEntries(formData);
-
+    console.log(email, password);
     try {
 
         await signIn("credentials", {email, password});
         
     } catch (error) {
         console.log(error);
-        return {error: "Error while login using credential!"};
+
+        if (error.message.includes("CredentialsSignin")) {
+            return { error: "Invalid username or password" };
+        }
+        throw error;
     }
 }
 
