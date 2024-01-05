@@ -22,15 +22,15 @@ const About = () => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center flex-col gap-1">
                         <h1 className="text-blue-600 font-bold text-xl">10 K+</h1>
-                        <p>Year of experience</p>
+                        <p className="text-center font-thin">Year of experience</p>
                     </div>
                     <div className="flex items-center flex-col gap-1">
                         <h1 className="text-blue-600 font-bold text-xl">10 K+</h1>
-                        <p>Year of experience</p>
+                        <p className="text-center font-thin">Year of experience</p>
                     </div>
                     <div className="flex items-center flex-col gap-1">
                         <h1 className="text-blue-600 font-bold text-xl">10 K+</h1>
-                        <p>Year of experience</p>
+                        <p className="text-center font-thin">Year of experience</p>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { addBlog, deleteBlog } from "@/components/lib/action";
+import { addBlog, deleteBlog } from "@/lib/action";
 
 const AddBlogPage = () => {
     return (

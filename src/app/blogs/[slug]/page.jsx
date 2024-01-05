@@ -1,4 +1,4 @@
-import { getPost, getUser } from "@/components/lib/data";
+import { getPost, getUser } from "@/lib/data";
 import Image from "next/image";
 
 // Dynamic metadata
@@ -15,7 +15,8 @@ export const generateMetadata = async ({params}) => {
 
 const getData = async (slug) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
+        const res = await fetch(`http://localhost:3000/api/blog/${slug}`); // Get
+        // const res = await fetch(`http://localhost:3000/api/blog/${slug}`, {method: "DELETE"}); // DELETE
         const data = await res.json();
         console.log(data);
         return data;

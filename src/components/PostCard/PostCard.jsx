@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 // import { deleteBlog } from "../lib/action";
 
+// Get all posts
 const getData = async () => {
     try {
         const res = await fetch("http://localhost:3000/api/blog");

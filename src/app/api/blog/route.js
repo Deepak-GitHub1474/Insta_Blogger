@@ -1,5 +1,5 @@
-import { Post } from "@/components/lib/models";
-import { connectDb } from "@/components/lib/utils";
+import { Post } from "@/lib/models";
+import { connectDb } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 export const GET = async (req) => {

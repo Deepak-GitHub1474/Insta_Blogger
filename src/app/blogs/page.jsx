@@ -1,5 +1,5 @@
 import PostCard from "@/components/PostCard/PostCard";
-import { getPosts, getUsers } from "@/components/lib/data";
+import { getPosts, getUsers } from "@/lib/data";
 
 export const metadata = {
     title: "Blog Page",
