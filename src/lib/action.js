@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { Post } from "./models";
 import { connectDb } from "./utils";
-import { signIn } from "./auth";
+import { signIn, signOut } from "./auth";
 
 export const addBlog = async (formData) => {
 
@@ -48,3 +48,9 @@ export const handleGithubLogin = async () =>{
     "use server";
     await signIn("github");
 }
+
+export const handleLogout = async () =>{
+    "use server";
+    await signOut();
+}
+

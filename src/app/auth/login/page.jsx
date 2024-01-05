@@ -1,5 +1,5 @@
-// import { auth, signIn } from "@/lib/auth";
 import { handleGithubLogin } from "@/lib/action";
+// import { auth, signIn } from "@/lib/auth";
 
 const Login = async () => {
 
@@ -18,7 +18,7 @@ const Login = async () => {
                 <input type="text" name="title" placeholder="username" className="p-3 rounded-md border-none outline-none bg-gray-800 text-white" />
                 <input type="email" name="description" placeholder="email" className="p-3 rounded-md border-none outline-none bg-gray-800 text-white" />
                 <input type="password" name="img" placeholder="password" className="p-3 rounded-md border-none outline-none bg-gray-800 text-white" />
-                <button className="bg-gray-400 text-black font-bold absolute bottom-0 left-0 right-0 p-2 hover:bg-gray-300 cursor-pointer">LogIn</button>
+                <button className="bg-gray-400 text-black font-bold absolute bottom-0 left-0 right-0 p-2 hover:bg-gray-300 cursor-pointer">Login</button>
             </form>
         </div>
     );
