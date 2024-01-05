@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { Post } from "./models";
+import { Post, User } from "./models";
 import { connectDb } from "./utils";
 import { signIn, signOut } from "./auth";
 
@@ -25,10 +25,11 @@ export const addBlog = async (formData) => {
 
     } catch (error) {
         console.log(error);
-        return ("Something went wrong while adding new blog!");
+        return ("Error while adding new blog!");
     }
 }
 
+// Delete Blog
 export const deleteBlog = async (formData) => {
     const {blogId} = Object.fromEntries(formData);
     try {
@@ -44,13 +45,48 @@ export const deleteBlog = async (formData) => {
     }
 }
 
+// Login using github account
 export const handleGithubLogin = async () =>{
     "use server";
     await signIn("github");
 }
 
+// Logout
 export const handleLogout = async () =>{
     "use server";
     await signOut();
 }
 
+// Signup
+
+export const signup = async (formData) => {
+    const {username, email, password, confirmPassword} = Object.fromEntries(formData);
+
+    if (password !== confirmPassword) {
+        console.log("password & confirmPassword is not same!");
+        return;
+    }
+
+    try {
+        connectDb();
+
+        const user = await User.findOne({email});
+
+        if (user) {
+            console.log("User already exist with this email!");
+            return;
+        }
+
+        const newUser = new User({
+            username: username,
+            email: email,
+            password: password,
+        });
+        await newUser.save();
+        console.log("New user added!");
+        
+    } catch (error) {
+        console.log(error);
+        return ("Error while signup new user!");
+    }
+}
