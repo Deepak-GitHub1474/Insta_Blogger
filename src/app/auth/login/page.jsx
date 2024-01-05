@@ -1,15 +1,6 @@
 import { handleGithubLogin } from "@/lib/action";
-// import { auth, signIn } from "@/lib/auth";
 
 const Login = async () => {
-
-    // const session = await auth();
-    // console.log(session);
-
-    // const handleGithubLogin = async () =>{
-    //     "use server";
-    //     await signIn("github");
-    // }
 
     return (
         <div className="min-h-[80vh] bg-gray-900 text-white flex flex-col items-center justify-center gap-4">
@@ -18,7 +9,14 @@ const Login = async () => {
                 <input type="text" name="title" placeholder="username" className="p-3 rounded-md border-none outline-none bg-gray-800 text-white" />
                 <input type="email" name="description" placeholder="email" className="p-3 rounded-md border-none outline-none bg-gray-800 text-white" />
                 <input type="password" name="img" placeholder="password" className="p-3 rounded-md border-none outline-none bg-gray-800 text-white" />
-                <button className="bg-gray-400 text-black font-bold absolute bottom-0 left-0 right-0 p-2 hover:bg-gray-300 cursor-pointer">Login</button>
+                <button className="bg-gray-400 text-black font-bold rounded-md p-2 hover:bg-gray-300 cursor-pointer">Login</button>
+                <div className="border-t-[0.5px] mt-2 p-1"></div>
+                {/* <div className="">
+                    <button className="bg-blue-800 text-white font-bold p-2 hover:bg-blue-600 cursor-pointer absolute left-0 right-0 bottom-0">
+                        <span>Github Login</span>
+                        <img src="https://cdn4.iconfinder.com/data/icons/iconsimple-logotypes/512/github-512.png" alt="" className="w-8 absolute bottom-1 z-50 translate-x-[22.5rem]"/>
+                    </button>
+                </div> */}
             </form>
         </div>
     );

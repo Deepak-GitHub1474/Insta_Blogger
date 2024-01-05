@@ -1,33 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-// import { deleteBlog } from "../lib/action";
-
-// Get all posts
-const getData = async () => {
-    try {
-        const res = await fetch("http://localhost:3000/api/blog");
-        const data = await res.json();
-        return data;
-    } catch (error) {
-        console.log(error);
-        throw new Error("Error while fetching all posts!");
-    }
-}
 
 const PostCard = ({posts, users}) => {
 
-    const [data, setData] = useState([]);
     const [isOpen, setIsOpen] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getData();
-            setData(data)
-        }
-        fetchData();
-    }, [])
-    console.log(data);
 
     const handleClick = (postId) => {
         if (isOpen === postId) {
@@ -39,9 +16,9 @@ const PostCard = ({posts, users}) => {
 
   return (
     <>
-      {data.map(blog => (
+      {posts.map(blog => (
             <div className="flex items-center justify-center flex-col" key={blog.userId}>
-                <div className=" max-w-[550px] w-[90vw] h-[500px] bg-gray-700 text-white my-4 p-4 pt-0 rounded-lg relative overflow-hidden">
+                <div className=" max-w-[550px] w-[90vw] h-[500px] bg-gray-700 text-white my-4 p-4 pt-0 rounded-lg relative overflow-hidden shadow-[0_5px_5px_white]">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
                             <div>Author</div>
@@ -70,7 +47,7 @@ const PostCard = ({posts, users}) => {
                         <p className="absolute right-2 text-gray-400 font-serif font-extralight text-sm">Published: {blog?.createdAt.toString().slice(4, 16)}</p> 
                     </div>
                     <div className="mt-8">
-                        <p>{blog?.description}</p>
+                        <p className="overflow-y-auto max-h-48">{blog?.description}</p>
                     </div>
                     <Link href={`/blogs/${blog.slug}`}>
                         <button className="bg-gray-400 text-black font-bold absolute bottom-0 left-0 right-0 p-2 hover:bg-gray-300">Read</button>
