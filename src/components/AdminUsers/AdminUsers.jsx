@@ -5,7 +5,6 @@ import { MdDelete } from "react-icons/md";
 
 const AdminUsers = async () => {
     const users = await getUsers();
-    // const isAdmin = users.filter(user => user.isAdmin === true); // map on this to get all the admins
 
     return (
         <div className="flex flex-col gap-2 items-center lg:w-full w-[95vw]">
