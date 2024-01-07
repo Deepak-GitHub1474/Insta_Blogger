@@ -28,7 +28,11 @@ const Header = ({session}) => {
   
             {session?.user ?
                 <div className="flex gap-2">
-                    {session.user?.isAdmin &&  <button className="bg-blue-800 hover:hover:bg-blue-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl">Admin</button>}
+                    {session.user?.isAdmin &&  
+                    <Link href="/admin">
+                        <button className="bg-blue-800 hover:hover:bg-blue-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl">Admin</button>
+                    </Link>
+                    }
                     <form action={handleLogout}>
                         <button className="bg-gray-900 hover:hover:bg-gray-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl">Logout</button>
                     </form>

@@ -12,12 +12,12 @@ const AdminPage = async () => {
   return (
     <div className="min-h-[80vh] bg-gray-900 text-white flex md:justify-between justify-center flex-wrap gap-12 p-4 pb-16">
        <div className="flex flex-col gap-12">
-            <div>
+            <div className="">
                 <Suspense fallback={<div>Hold on loading...</div>}>
                     <AdminPosts />
                 </Suspense>
             </div>
-            <div>
+            <div className="">
                 <Suspense fallback={<div>Hold on loading...</div>}>
                     <AdminUsers />
                 </Suspense>
@@ -25,10 +25,10 @@ const AdminPage = async () => {
         </div>
 
         <div className="flex flex-col gap-12">
-            <div>
+            <div className="">
                 <AdminPostForm userId={session.user.id} />
             </div>
-            <div>
+            <div className="">
                 <AdminUserForm />
             </div>
         </div>

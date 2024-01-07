@@ -7,7 +7,7 @@ import { signIn, signOut } from "./auth";
 import bcrypt from "bcryptjs";
 
 // Add blog
-export const addBlog = async (formData) => {
+export const addBlog = async (prevState, formData) => {
 
     const {title, description, img, userId, slug} = Object.fromEntries(formData);
 
@@ -15,15 +15,16 @@ export const addBlog = async (formData) => {
         connectDb();
         
         const newPost = new Post({
-            title: title,
-            description: description,
-            img: img,
-            userId: userId,
-            slug: slug,
+            title,
+            description,
+            img,
+            userId,
+            slug,
         });
         await newPost.save();
         console.log("New blog added to DB");
         revalidatePath("/blog");
+        revalidatePath("/admin");
 
     } catch (error) {
         console.log(error);
@@ -33,17 +34,70 @@ export const addBlog = async (formData) => {
 
 // Delete Blog
 export const deleteBlog = async (formData) => {
-    const {blogId} = Object.fromEntries(formData);
+    const {id} = Object.fromEntries(formData);
+
     try {
         connectDb();
 
-        await Post.findByIdAndDelete(blogId);
+        await Post.findByIdAndDelete(id);
         console.log("Blog deleted from DB");
         revalidatePath("/blog");
+        revalidatePath("/admin");
 
     } catch (error) {
         console.log(error);
         return {error: "Something went wrong while deleting blog!"};
+    }
+}
+
+// Add User
+export const addUser = async (previousState, formData) => {
+    const {username, email, password, img } = Object.fromEntries(formData);
+
+    try {
+        connectDb();
+
+        const user = await User.findOne({email});
+
+        if (user) {
+            console.log("User already exist");
+            return{error: "User already exist"};
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = new User({
+            username, 
+            email, 
+            password: hashedPassword,
+            img,
+        });
+
+        await newUser.save();
+        console.log("New user added!");
+        revalidatePath("/admin");
+        
+    } catch (error) {
+        console.log(error);
+        return {error: "Error while signup new user!"};
+    }
+}
+
+// Delete User
+export const deleteUser = async (formData) => {
+    const {id} = Object.fromEntries(formData);
+    try {
+        connectDb();
+
+        await Post.deleteMany({userId: id});
+        await User.findByIdAndDelete(id);
+        console.log("User deleted from DB");
+        revalidatePath("/admin");
+
+    } catch (error) {
+        console.log(error);
+        return {error: "Something went wrong while deleting user!"};
     }
 }
 
@@ -94,7 +148,7 @@ export const handleGithubLogin = async () =>{
 // Login using credential
 export const login = async (previousState, formData) => {
     const {email, password} = Object.fromEntries(formData);
-    console.log(email, password);
+    
     try {
 
         await signIn("credentials", {email, password});
