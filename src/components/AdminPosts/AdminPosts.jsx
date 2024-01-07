@@ -8,7 +8,7 @@ const AdminPosts = async () => {
     const posts = await getPosts();
 
     return (
-        <div className="flex flex-col gap-2 items-center md:w-[450px] w-[95vw]">
+        <div className="flex flex-col gap-2 items-center lg:w-full w-[95vw]">
             <div className="flex items-center justify-center gap-2 w-full">
                 <div className="border-t-[0.5px] mt-2 p-1 flex-1 opacity-15 "></div>
                 <div className="text-blue-500 font-semibold text-xl">Posts</div>

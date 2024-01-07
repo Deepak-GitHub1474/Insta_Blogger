@@ -10,8 +10,8 @@ const AdminPage = async () => {
   const session = await auth();
 
   return (
-    <div className="min-h-[80vh] bg-gray-900 text-white flex md:justify-between justify-center flex-wrap gap-12 p-4 pb-16">
-       <div className="flex flex-col gap-12">
+    <div className="min-h-[80vh] bg-gray-900 text-white flex lg:justify-around justify-center flex-wrap gap-12 p-4 pb-16">
+       <div className="flex flex-col gap-12 flex-1">
             <div>
                 <Suspense fallback={<div>Hold on loading...</div>}>
                     <AdminPosts />
@@ -24,7 +24,7 @@ const AdminPage = async () => {
             </div>
         </div>
 
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col items-center gap-12 flex-1">
             <div>
                 <AdminPostForm userId={session.user.id} />
             </div>
