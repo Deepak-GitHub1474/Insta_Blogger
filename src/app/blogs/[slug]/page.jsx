@@ -18,7 +18,7 @@ const BlogSinglePage = async ({params}) => {
     const {slug} = params;
 
     const post = await getPost(slug);
-    const user = await getUser(slug);
+    const user = await getUser(post.userId);
 
     return (
         <div className="min-h-[80vh] bg-gray-900 text-white p-4 flex flex-col gap-14">

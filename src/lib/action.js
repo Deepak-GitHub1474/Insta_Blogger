@@ -25,6 +25,7 @@ export const addBlog = async (prevState, formData) => {
         console.log("New blog added to DB");
         revalidatePath("/blog");
         revalidatePath("/admin");
+        return {success: true};
 
     } catch (error) {
         console.log(error);

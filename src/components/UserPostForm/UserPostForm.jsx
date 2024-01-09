@@ -1,29 +1,20 @@
 "use client";
 
 import { addBlog } from "@/lib/action";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormState } from "react-dom";
-import {toast} from "react-hot-toast";
 
-const AdminPostForm = ({userId}) => {
+const UserPostForm = ({userId}) => {
 
     const [state, formAction] = useFormState(addBlog, undefined);
-    const [isAdded, setIsAdded] = useState(state?.success);
     const [uniqueSlug, setUniqueSlug] = useState(null);
 
     function addNewBlog() {
-        setIsAdded(prevIsAdded => !prevIsAdded);
         setUniqueSlug(prevUniqueSlug => prevUniqueSlug = Math.random());
     }
 
-    useEffect(() => {
-        if (state?.success) {
-            toast.success("Blog Added Successfully");
-        }
-    }, [isAdded]);
-
     return (
-        <form action={formAction}className="flex flex-col gap-2 lg:w-[650px] w-[95vw] bg-gray-700 pb-16 px-2 rounded-lg shadow-[0_5px_5px_white] relative overflow-hidden">
+        <form action={formAction} className="flex flex-col gap-2 md:w-[650px] w-[95vw] bg-gray-700 pb-16 px-2 rounded-lg shadow-[0_5px_5px_white] relative overflow-hidden">
             <h1 className="text-center font-bold text-2xl text-gray-400 mb-2">Add New Blog</h1>
             <input type="hidden" name="userId" value={userId} />
             <input type="hidden" name="slug" value={uniqueSlug} />
@@ -36,4 +27,4 @@ const AdminPostForm = ({userId}) => {
     );
 }
 
-export default AdminPostForm;
+export default UserPostForm;

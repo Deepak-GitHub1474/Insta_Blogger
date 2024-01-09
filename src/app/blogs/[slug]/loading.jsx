@@ -5,7 +5,7 @@ import "./skeleton.css";
 const SinglePostsSkeleton = async () => {
 
   return(
-    <div className="bg-gray-900 flex items-center justify-center flex-col">
+    <div className="bg-gray-900 min-h-[80vh] flex items-center justify-center flex-col">
         <div className="flex flex-col items-center justify-center gap-1 animate-pulse">
             <div className="w-[120px] h-[120px] bg-white shadow-[0_0_15px_#0000ff] rounded-full">
                 <Skeleton width={0} height={0} />

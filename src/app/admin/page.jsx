@@ -1,12 +1,8 @@
-import { Suspense } from "react";
-
 import { auth } from "@/lib/auth";
 import AdminPosts from "@/components/AdminPosts/AdminPosts";
 import AdminPostForm from "@/components/AdminPostForm/AdminPostForm";
 import AdminUsers from "@/components/AdminUsers/AdminUsers";
 import AdminUserForm from "@/components/AdminUserForm/AdminUserForm";
-import AdminPostsSkeleton from "@/components/Skeleton/AdminPostsSkeleton/AdminPostsSkeleton";
-import SkeletonAdminUsers from "@/components/Skeleton/AdminUsersSkeleton/AdminUsersSkeleton";
 
 const AdminPage = async () => {
   const session = await auth();
@@ -16,13 +12,9 @@ const AdminPage = async () => {
        <div className="flex flex-col gap-12 flex-1">
             <div>
                 <AdminPosts />
-                {/* <Suspense fallback={<div><AdminPostsSkeleton /> </div>}>
-                </Suspense> */}
             </div>
             <div>
-                    <AdminUsers />
-                {/* <Suspense fallback={<div><SkeletonAdminUsers /></div>}>
-                </Suspense> */}
+                <AdminUsers />
             </div>
         </div>
 

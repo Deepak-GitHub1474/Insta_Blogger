@@ -9,7 +9,7 @@ import { getPosts, getUsers } from "@/lib/data";
     const users = await getUsers();
 
     return(
-        <div className="bg-gray-900 flex flex-col items-center justify-center gap-8 p-4">
+        <div className="bg-gray-900 min-h-[80vh] flex flex-col items-center justify-center gap-8 p-4">
 
             <div className="flex items-center gap-10 overflow-x-auto max-w-full p-2">
                 {Array.from({ length: posts.length }).map((_, index) => (

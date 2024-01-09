@@ -1,6 +1,7 @@
-import Footer from '@/components/Footer/Footer'
-import './globals.css'
-import NavLink from '@/components/Header/Navbar/Navbar'
+import Footer from '@/components/Footer/Footer';
+import './globals.css';
+import NavLink from '@/components/Header/Navbar/Navbar';
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: {
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <NavLink />
+        <Toaster position="top-center" />
         {children}
         <Footer />
       </body>
