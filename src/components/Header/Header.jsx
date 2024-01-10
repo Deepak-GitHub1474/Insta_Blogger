@@ -29,9 +29,10 @@ function Header({session}) {
     return (
         <nav className={`bg-slate-700 text-white ${headerClassName}`}>
             
-            <div className=" absolute top-2 left-5 w-14 rounded-full overflow-hidden cursor-pointer" >
+            <div className=" absolute top-2 left-5 cursor-pointer" >
                 <Link href="/">
-                    <img src="https://res.cloudinary.com/dlt4ash36/image/upload/v1702147789/favicon_xtzfvl.png" alt="nav-logo" />
+                    <h1 className='text-3xl text-blue-600 font-bold font-serif'>InstaBlogger</h1>
+                    <p className='font-extralight ml-[2.2rem] text-sm opacity-60'>...from blog to social media</p>
                 </Link>
             </div>
 
@@ -56,15 +57,15 @@ function Header({session}) {
                         <div  className={`${isNavVisible ? " flex flex-col gap-3 text-lg" : "flex items-center justify-center gap-8 text-lg"}`}>
                             {session.user?.isAdmin &&  
                             <Link href="/admin">
-                                <button className="bg-blue-800 w-full hover:hover:bg-blue-600 py-[6px] px-3 text-[1rem]">Admin</button>
+                                <button className="bg-blue-800 w-full hover:hover:bg-blue-600 py-[6px] px-3">Admin</button>
                             </Link>
                             }
                             <form action={handleLogout}>
-                                <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3 text-[1rem]">Logout</button>
+                                <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3">Logout</button>
                             </form>
                         </div> :
                         <Link href="/auth/login">
-                            <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3 text-center text-[1rem]">Login</button>
+                            <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3 text-center">Login</button>
                         </Link>
                     }
                 </ul>
