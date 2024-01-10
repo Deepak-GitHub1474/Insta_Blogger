@@ -8,7 +8,6 @@ import { toast } from "react-hot-toast";
 const AdminPostForm = ({ userId }) => {
   const [state, formAction] = useFormState(addBlog, undefined);
   const [uniqueSlug, setUniqueSlug] = useState(null);
-  const [isAddedBlog, setIsAddedBlog] = useState(false);
 
   const [input, setInput] = useState({
         title: "",
@@ -16,17 +15,24 @@ const AdminPostForm = ({ userId }) => {
         description: "",
   });
 
+  const isValidURL = (str) => {
+    const pattern = /^(http|https):\/\/[^ "]+$/;
+    return !!pattern.test(str);
+  };
+
   const addNewBlog = async () => {
     if (!input.title || !input.img || !input.description) {
-      toast.error("Please fill in all fields.");
-      setIsAddedBlog(false);
+      toast.error("Please fill all fields.");
       return;
+    } 
 
-    } else {
-        setUniqueSlug(Math.random());
-        toast.success("Blog Added Successfully");
-        setIsAddedBlog(true);
+    if (input.img && !isValidURL(input.img)) {
+        toast.error('Please enter a valid URL in the image field.');
+        return;
     }
+    
+    setUniqueSlug(Math.random());
+    toast.success("Blog Added Successfully");
     
   };
 
