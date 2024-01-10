@@ -9,11 +9,11 @@ import bcrypt from "bcryptjs";
 // Add blog
 export const addBlog = async (prevState, formData) => {
 
-    const {title, description, img, userId, slug} = Object.fromEntries(formData);
+    const { title, description, img, userId, slug } = Object.fromEntries(formData);
 
     try {
         connectDb();
-        
+
         const newPost = new Post({
             title,
             description,
@@ -25,17 +25,17 @@ export const addBlog = async (prevState, formData) => {
         console.log("New blog added to DB");
         revalidatePath("/blog");
         revalidatePath("/admin");
-        return {success: true};
+        return { success: true };
 
     } catch (error) {
         console.log(error);
-        return {error: "Error while adding new blog!"};
+        return { error: "Error while adding new blog!" };
     }
 }
 
 // Delete Blog
 export const deleteBlog = async (formData) => {
-    const {id} = Object.fromEntries(formData);
+    const { id } = Object.fromEntries(formData);
 
     try {
         connectDb();
@@ -47,30 +47,59 @@ export const deleteBlog = async (formData) => {
 
     } catch (error) {
         console.log(error);
-        return {error: "Something went wrong while deleting blog!"};
+        return { error: "Something went wrong while deleting blog!" };
     }
 }
 
-// Add User
-export const addUser = async (previousState, formData) => {
-    const {username, email, password, img } = Object.fromEntries(formData);
+// Update Blog
+export const updateBlog = async (prevState, formData) => {
+    const { title, description, img, id } = Object.fromEntries(formData);
 
     try {
         connectDb();
 
-        const user = await User.findOne({email});
+        const updatedPost = await Post.findByIdAndUpdate(
+            id,
+            {
+                title,
+                description,
+                img,
+            },
+            { new: true } // Ensure you get the updated post after the operation
+        );
+
+        //console.log("Blog updated:", updatedPost);
+        console.log("Blog updated");
+        revalidatePath("/blog");
+        revalidatePath("/admin");
+        return { success: true };
+    } catch (error) {
+        console.log(error);
+        return { error: "Error while updating blog!" };
+    }
+};
+
+
+// Add User
+export const addUser = async (previousState, formData) => {
+    const { username, email, password, img } = Object.fromEntries(formData);
+
+    try {
+        connectDb();
+
+        const user = await User.findOne({ email });
 
         if (user) {
             console.log("User already exist");
-            return{error: "User already exist"};
+            return { error: "User already exist" };
         }
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            username, 
-            email, 
+            username,
+            email,
             password: hashedPassword,
             img,
         });
@@ -78,47 +107,47 @@ export const addUser = async (previousState, formData) => {
         await newUser.save();
         console.log("New user added!");
         revalidatePath("/admin");
-        
+
     } catch (error) {
         console.log(error);
-        return {error: "Error while signup new user!"};
+        return { error: "Error while signup new user!" };
     }
 }
 
 // Delete User
 export const deleteUser = async (formData) => {
-    const {id} = Object.fromEntries(formData);
+    const { id } = Object.fromEntries(formData);
     try {
         connectDb();
 
-        await Post.deleteMany({userId: id});
+        await Post.deleteMany({ userId: id });
         await User.findByIdAndDelete(id);
         console.log("User deleted from DB");
         revalidatePath("/admin");
 
     } catch (error) {
         console.log(error);
-        return {error: "Something went wrong while deleting user!"};
+        return { error: "Something went wrong while deleting user!" };
     }
 }
 
 // Signup
 export const signup = async (previousState, formData) => {
-    const {username, email, password, confirmPassword} = Object.fromEntries(formData);
+    const { username, email, password, confirmPassword } = Object.fromEntries(formData);
 
     if (password !== confirmPassword) {
         console.log("password & confirmPassword do not match!");
-        return {error: "password & confirmPassword do not match!"};
+        return { error: "password & confirmPassword do not match!" };
     }
 
     try {
         connectDb();
 
-        const user = await User.findOne({email});
+        const user = await User.findOne({ email });
 
         if (user) {
             console.log("User already exist");
-            return{error: "User already exist"};
+            return { error: "User already exist" };
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -132,28 +161,28 @@ export const signup = async (previousState, formData) => {
 
         await newUser.save();
         console.log("New user added!");
-        return {success: true};
-        
+        return { success: true };
+
     } catch (error) {
         console.log(error);
-        return {error: "Error while signup new user!"};
+        return { error: "Error while signup new user!" };
     }
 }
 
 // Login using github account
-export const handleGithubLogin = async () =>{
+export const handleGithubLogin = async () => {
     "use server";
     await signIn("github");
 }
 
 // Login using credential
 export const login = async (previousState, formData) => {
-    const {email, password} = Object.fromEntries(formData);
-    
+    const { email, password } = Object.fromEntries(formData);
+
     try {
 
-        await signIn("credentials", {email, password});
-        
+        await signIn("credentials", { email, password });
+
     } catch (error) {
         console.log(error);
 
@@ -165,7 +194,7 @@ export const login = async (previousState, formData) => {
 }
 
 // Logout
-export const handleLogout = async () =>{
+export const handleLogout = async () => {
     "use server";
     await signOut();
 }

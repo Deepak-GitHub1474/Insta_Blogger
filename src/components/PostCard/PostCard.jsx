@@ -33,7 +33,7 @@ const PostCard = ({posts, users, session}) => {
                         
                         {isOpen === blog._id && 
                         <ul className="w-[120px] bg-gray-400 text-black rounded-md absolute top-8 right-[2px] overflow-hidden">
-                            <Link href="" className="Link">
+                            <Link href={`/editblog/${blog.slug}`} className="Link">
                                 <li className="text-sm font-semibold p-[5px] hover:bg-gray-300 w-[98%] rounded-md cursor-pointer">Edit</li>
                             </Link>
                             <div className="w-[98%] border-t-[0.5px] border-stone-500"></div>
