@@ -15,7 +15,7 @@ const AdminPosts = async () => {
                 <div className="border-t-[0.5px] mt-2 p-1 flex-1 opacity-15"></div>
             </div>
 
-            <div className="flex items-center gap-10 overflow-x-auto max-w-full p-2">
+            <div className="flex items-center gap-10 overflow-x-auto max-w-full p-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {posts.map(blog => (
                     <div key={blog._id} className="flex flex-col items-center gap-1 border-[1px] border-gray-700 p-3 rounded-lg hover:scale-[1.05] transition-all">
                         <div className="w-16 h-16 relative rounded-full overflow-hidden ">

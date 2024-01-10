@@ -1,46 +1,78 @@
 "use client";
+
+import { useState, useEffect } from 'react';
 import { handleLogout } from "@/lib/action";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Header = ({session}) => {
+function Header({session}) {
 
+    const [isNavVisible, setIsNavVisible] = useState(false);
     const pathName = usePathname();
-    
+
+    const headerClassName = isNavVisible ? "w-full h-[65vh] transition-all duration-300" : "w-full h-[10vh] transition-all duration-300";
+
+    useEffect(() => {
+        function handleResize() {
+            if (window.innerWidth >= 1024) {
+                setIsNavVisible(false);
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, []);
+
     return (
-        <nav className=" bg-gray-700 text-white h-[10vh] flex items-center justify-around p-2">
-            <div className="w-12 rounded-full overflow-hidden cursor-pointer mr-1" >
+        <nav className={`bg-slate-700 text-white ${headerClassName}`}>
+            
+            <div className=" absolute top-2 left-5 w-14 rounded-full overflow-hidden cursor-pointer" >
                 <Link href="/">
                     <img src="https://res.cloudinary.com/dlt4ash36/image/upload/v1702147789/favicon_xtzfvl.png" alt="nav-logo" />
                 </Link>
             </div>
-            <ul className="flex items-center justify-center sm:gap-5 gap-1">
-                <Link href="/about">
-                    <li className={`hover:hover:bg-gray-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl ${pathName === "/about" && "bg-gray-900"}`}>About</li>
-                </Link>
-                <Link href="/contact">
-                    <li className={`hover:hover:bg-gray-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl ${pathName === "/contact" && "bg-gray-900"}`}>Contact</li>
-                </Link>
-                <Link href="/blogs">
-                    <li className={`hover:hover:bg-gray-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl ${pathName === "/blogs" && "bg-gray-900"}`}>Blog</li>
-                </Link>
-            </ul>
-  
-            {session?.user ?
-                <div className="flex gap-2">
-                    {session.user?.isAdmin &&  
-                    <Link href="/admin">
-                        <button className="bg-blue-800 hover:hover:bg-blue-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl">Admin</button>
+
+            <div className={`${isNavVisible ? "absolute left-5 top-[5rem] right-7" : "absolute top-3 right-7 lg:block hidden"}`}>
+                <ul className={`${isNavVisible ? "flex flex-col gap-3 text-lg" : "flex items-center justify-center gap-3 text-lg"}`}>
+                    <Link href="/">
+                        <li className={`py-[6px] px-3 ${pathName==="/" ? "bg-gray-900 hover:bg-gray-600" : "hover:bg-gray-600"}`}>Home</li>
                     </Link>
+                    <Link href="/about">
+                        <li className={`py-[6px] px-3 ${pathName==="/about" ? "bg-gray-900 hover:bg-gray-600" : "hover:bg-gray-600"}`}>About</li>
+                    </Link>
+                    <Link href="/contact">
+                        <li className={`py-[6px] px-3 ${pathName==="/contact" ? "bg-gray-900 hover:bg-gray-600" : "hover:bg-gray-600"}`}>Contact</li>
+                    </Link>
+                    <Link href="/blogs" >
+                        <li className={`py-[6px] px-3 ${pathName==="/blogs" ? "bg-gray-900" : "hover:bg-gray-600"}`}>Blogs</li>
+                    </Link>
+                    <Link href="/addblog" >
+                        <li className={`py-[6px] px-3 ${pathName==="/addblog" ? "bg-gray-900" : "hover:bg-gray-600"}`}>Add Blog</li>
+                    </Link>
+                    {session?.user ?
+                        <div  className={`${isNavVisible ? " flex flex-col gap-3 text-lg" : "flex items-center justify-center gap-8 text-lg"}`}>
+                            {session.user?.isAdmin &&  
+                            <Link href="/admin">
+                                <button className="bg-blue-800 w-full hover:hover:bg-blue-600 py-[6px] px-3 text-[1rem]">Admin</button>
+                            </Link>
+                            }
+                            <form action={handleLogout}>
+                                <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3 text-[1rem]">Logout</button>
+                            </form>
+                        </div> :
+                        <Link href="/auth/login">
+                            <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3 text-center text-[1rem]">Login</button>
+                        </Link>
                     }
-                    <form action={handleLogout}>
-                        <button className="bg-gray-900 hover:hover:bg-gray-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl">Logout</button>
-                    </form>
-                </div> :
-                <Link href="/auth/login">
-                    <button className="bg-gray-900 hover:hover:bg-gray-600 py-1 w-[4.5rem] text-center text-[1rem] rounded-2xl">Login</button>
-                </Link>
-            }
+                </ul>
+            </div>
+            <div onClick={() => setIsNavVisible(!isNavVisible)} 
+                className="absolute right-7 top-[0.8rem] border border-gray-300 p-1 px-3 rounded-[4px] lg:hidden block cursor-pointer">
+                <div className="bg-[url('https://res.cloudinary.com/dlt4ash36/image/upload/v1704828601/menu_zntl6s.png')] bg-cover bg-center w-8 h-8"></div>
+            </div>
         </nav>
     );
 }

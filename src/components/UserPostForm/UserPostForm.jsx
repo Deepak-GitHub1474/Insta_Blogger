@@ -3,6 +3,7 @@
 import { addBlog } from "@/lib/action";
 import { useState } from "react";
 import { useFormState } from "react-dom";
+import {toast} from "react-hot-toast";
 
 const UserPostForm = ({userId}) => {
 
@@ -11,6 +12,9 @@ const UserPostForm = ({userId}) => {
 
     function addNewBlog() {
         setUniqueSlug(prevUniqueSlug => prevUniqueSlug = Math.random());
+        if (!state?.error) {
+            toast.success("Blog Added Successfully")
+        }
     }
 
     return (

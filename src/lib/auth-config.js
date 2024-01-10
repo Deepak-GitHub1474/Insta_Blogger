@@ -28,6 +28,7 @@ export const authConfig = {
             const user = auth?.user;
             const isOnAdminPanel = request.nextUrl?.pathname.startsWith("/admin");
             const isOnBlogPage = request.nextUrl?.pathname.startsWith("/blogs");
+            const isOnAddBlogPage = request.nextUrl?.pathname.startsWith("/addblog");
             const isOnLoginPage = request.nextUrl?.pathname.startsWith("/auth/login");
             // const isOnRegisterPage = request.nextUrl?.pathname.startsWith("/auth/register");
 
@@ -38,6 +39,11 @@ export const authConfig = {
 
             // ONLY AUTHENTICATED USERS CAN REACH THE BLOG PAGE
             if (isOnBlogPage && !user) {
+                return false;
+            }
+
+            // ONLY AUTHENTICATED USERS CAN REACH THE ADD BLOG PAGE
+            if (isOnAddBlogPage && !user) {
                 return false;
             }
 

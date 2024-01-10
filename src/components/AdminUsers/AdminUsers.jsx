@@ -13,7 +13,7 @@ const AdminUsers = async () => {
                 <div className="text-blue-500 font-semibold text-xl">Users</div>
                 <div className="border-t-[0.5px] mt-2 p-1 flex-1 opacity-15"></div>
             </div>
-            <div className="flex items-center gap-5 overflow-x-auto overflow-y-hidden max-w-full p-2">
+            <div className="flex items-center gap-5 overflow-x-auto overflow-y-hidden max-w-full p-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {users.map(user => (
                     <div key={user._id} className=" flex flex-col items-center justify-center">
                         <div className="w-16 h-16 relative rounded-full overflow-hidden border-2 border-blue-700 hover:scale-[1.1] transition-all">
