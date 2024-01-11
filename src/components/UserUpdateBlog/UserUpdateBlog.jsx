@@ -7,7 +7,7 @@ import { useFormState } from "react-dom";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
 
-const UserUpdateBlog = async ({ post }) => {
+const UserUpdateBlog = ({ post }) => {
 
   const [state, formAction] = useFormState(updateBlog, undefined);
 
@@ -24,7 +24,7 @@ const UserUpdateBlog = async ({ post }) => {
     return !!pattern.test(str);
   };
 
-  const editBlog = async () => {
+  const editBlog = () => {
     if (!input.title || !input.img || !input.description) {
       toast.error("Please fill all fields.");
       return;
@@ -54,7 +54,7 @@ const UserUpdateBlog = async ({ post }) => {
         <div className="w-32 h-32 relative rounded-full overflow-hidden object-cover">
             <Image src={input?.img ? input?.img : "https://media1.tenor.com/m/51xvC35-fDEAAAAC/manhunt.gif"} fill alt="Post-Image" />
         </div>
-        <div className="mt-2">
+        <div className="mt-2 max-w-[700px] w-[95vw] p-4">
             <h3 className=" font-semibold font-serif">Title: {input?.title}</h3>
             <p className="text-gray-400 font-serif font-extralight text-sm mt-1">Description: {input?.description}</p>
         </div>
