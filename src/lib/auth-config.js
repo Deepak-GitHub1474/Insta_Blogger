@@ -12,6 +12,7 @@ export const authConfig = {
                 token.id = user.id;
                 token.isAdmin = user.isAdmin;
                 token.username = user.username;
+                token.img = user.img;
                 // Add other property if you need
             }
             return token;
@@ -22,6 +23,7 @@ export const authConfig = {
                 session.user.id = token.id;
                 session.user.isAdmin = token.isAdmin;
                 session.user.username = token.username;
+                session.user.img = token.img;
             }
             return session;
         },
@@ -31,8 +33,8 @@ export const authConfig = {
             const isOnAdminPanel = request.nextUrl?.pathname.startsWith("/admin");
             const isOnBlogPage = request.nextUrl?.pathname.startsWith("/blogs");
             const isOnAddBlogPage = request.nextUrl?.pathname.startsWith("/addblog");
+            const isOnProfilePage = request.nextUrl?.pathname.startsWith("/profile");
             const isOnLoginPage = request.nextUrl?.pathname.startsWith("/auth/login");
-            // const isOnRegisterPage = request.nextUrl?.pathname.startsWith("/auth/register");
 
             // ADMIN ACCESS ONLY
             if (isOnAdminPanel && !user?.isAdmin) {
@@ -48,16 +50,15 @@ export const authConfig = {
             if (isOnAddBlogPage && !user) {
                 return false;
             }
+            // ONLY AUTHENTICATED USERS CAN REACH THE PROFILE PAGE
+            if (isOnProfilePage && !user) {
+                return false;
+            }
 
             // ONLY UNAUTHENTICATED USERS CAN REACH THE LOGIN PAGE
             if (isOnLoginPage &&  user) {
                 return Response.redirect(new URL("/", request.nextUrl));
             }
-
-            // ONLY UNAUTHENTICATED USERS CAN REACH THE REGISTER PAGE
-            // if (isOnRegisterPage &&  user) {
-            //     return Response.redirect(new URL("/", request.nextUrl));
-            // }
 
             return true
         },

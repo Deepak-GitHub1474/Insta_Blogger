@@ -7,7 +7,6 @@ export const getPosts = async () => {
     try {
         connectDb();
         const posts = await Post.find();
-        // const data= JSON.parse(posts);
         return posts;
     } catch (error) {
         console.log(error);
