@@ -7,14 +7,14 @@ import { useFormState } from "react-dom";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-const LoginForm = () => {
+const LoginForm = ({session}) => {
 
     const [state, formAction] = useFormState(login, undefined);
     const [isLogin, setIsLogin] = useState(false);
     const [isGitLogin, setIsGitLogin] = useState(false);
 
     function isLogging() {
-        if (state) {
+        if (session) {
             setIsLogin(prevIsLogin => !prevIsLogin);
         } 
     }

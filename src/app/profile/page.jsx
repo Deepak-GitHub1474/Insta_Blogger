@@ -17,11 +17,15 @@ const Page = async () => {
             <div className="flex flex-col sm:gap-12 gap-6">
                 <div className="flex sm:items-center justify-center sm:gap-24 gap-6 pb-4">
                     <div className="sm:w-36 sm:h-36 w-20 h-20 relative rounded-full overflow-hidden object-cover">
-                        <Image src={session?.user?.img ? session?.user?.img : "/avatar.png"} fill alt="Author-Image" />
+                        {session?.user?.img && <Image src={session?.user?.img ? session?.user?.img : "/avatar.png"} fill alt="Author-Image" />}
+                        {session?.user?.image && <Image src={session?.user?.image ? session?.user?.image : "/avatar.png"} fill alt="Author-Image" />}
                     </div>
                     <div className="flex flex-col sm:gap-8 gap-6">
                         <div className="flex sm:flex-row flex-col sm:gap-10 gap-2">
-                            <h3 className="font-semibold text-lg max-w-48 overflow-hidden whitespace-nowrap text-ellipsis">{session?.user?.username[0].toUpperCase()+session?.user?.username.slice(1)}</h3>
+                            <h3 className="font-semibold text-lg max-w-48 overflow-hidden whitespace-nowrap text-ellipsis">
+                                {session?.user?.username && session?.user?.username[0].toUpperCase()+session?.user?.username.slice(1)}
+                                {session?.user?.name && session?.user?.name[0].toUpperCase()+session?.user?.name.slice(1)}
+                            </h3>
                             <button className="bg-gray-700 hover:bg-gray-500 max-w-48 text-sm py-1 sm:px-6 rounded-md">Edit Profile</button>
                         </div>
                         <div className="sm:flex gap-10 hidden">

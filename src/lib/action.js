@@ -5,6 +5,7 @@ import { Post, User } from "./models";
 import { connectDb } from "./utils";
 import { signIn, signOut } from "./auth";
 import bcrypt from "bcryptjs";
+import { v2 as cloudinary } from 'cloudinary';
 
 // Add blog
 export const addBlog = async (prevState, formData) => {
@@ -132,8 +133,9 @@ export const deleteUser = async (formData) => {
 }
 
 // Signup
+
 export const signup = async (previousState, formData) => {
-    const { username, email, password, confirmPassword } = Object.fromEntries(formData);
+    const { username, email, password, confirmPassword, img } = Object.fromEntries(formData);
 
     if (password !== confirmPassword) {
         console.log("password & confirmPassword do not match!");
@@ -153,14 +155,37 @@ export const signup = async (previousState, formData) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        cloudinary.config({
+            cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET,
+        });
+
+        const file = img;
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = new Uint8Array(arrayBuffer);
+        const cloudinaryImgUrl = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream( (error, result) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+                
+                resolve(result);
+            })
+            .end(buffer);
+        });
+
         const newUser = new User({
             username: username,
             email: email,
             password: hashedPassword,
+            img: cloudinaryImgUrl?.secure_url
         });
 
         await newUser.save();
         console.log("New user added!");
+        revalidatePath("/auth/register");
         return { success: true };
 
     } catch (error) {
@@ -198,4 +223,3 @@ export const handleLogout = async () => {
     "use server";
     await signOut();
 }
-

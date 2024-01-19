@@ -13,8 +13,8 @@ function Header({session}) {
     const pathName = usePathname();
 
     // Handle Navbar Size
-    const headerClassName = isNavVisible ? "w-full min-h-[100vh] transition-all duration-300" : 
-                                           "w-full h-[10vh] transition-all duration-300";
+    const headerClassName = isNavVisible ? "w-full min-h-[100vh] transition-all duration-300 absolute z-50" : 
+                                           "w-full h-[10vh] transition-all duration-300 relative";
     // Track window with
     useEffect(() => {
         function handleResize() {
@@ -48,13 +48,19 @@ function Header({session}) {
             <div className={`${isNavVisible ? "absolute left-5 top-[5rem] right-7" : "absolute top-3 right-7 lg:block hidden"}`}>
                 <ul className={`${isNavVisible ? "flex flex-col gap-3 text-lg" : "flex items-center justify-center gap-3 text-lg"}`}>
                     <Link href="/profile" className="lg:hidden flex relative group max-w-fit">
-                        <div className="w-16 h-16 rounded-full overflow-hidden hover:scale-[1.1] transition-all hover:border-2 border-blue-700">
-                            <img
+                        <div className={`w-16 h-16 rounded-full overflow-hidden hover:scale-[1.1] transition-all hover:border-2 border-blue-700 ${pathName==="/profile" && "border-2 border-gray-900 hover:border-blue-700"}`}>
+                            {session?.user?.img &&<img
                                 src={!session?.user?.img ? "https://res.cloudinary.com/dlt4ash36/image/upload/v1700893730/User-Avatar-Profile-Download-PNG-Isolated-Image_mrgemq.png": session?.user?.img}
-                                alt="dp" className="w-full h-full object-cover" />
+                                alt="dp" className="w-full h-full object-cover" 
+                            />}
+                            {session?.user?.image &&<img
+                                src={!session?.user?.image ? "https://res.cloudinary.com/dlt4ash36/image/upload/v1700893730/User-Avatar-Profile-Download-PNG-Isolated-Image_mrgemq.png": session?.user?.image}
+                                alt="dp" className="w-full h-full object-cover" 
+                            />}
                         </div>
                         <p className="text-base ml-[5px] absolute left-14 top-0 z-50 bg-gray-900 max-w-60 py-[2px] px-4 overflow-hidden whitespace-nowrap text-ellipsis opacity-0 group-hover:opacity-100 transition-opacity">
-                            {session?.user?.username.charAt(0).toUpperCase() + session?.user.username.slice(1)}
+                            {session?.user?.username && session?.user?.username.charAt(0).toUpperCase() + session?.user.username.slice(1)}
+                            {session?.user?.name && session?.user?.name.charAt(0).toUpperCase() + session?.user.name.slice(1)}
                         </p>
                     </Link>
                     <Link href="/">
@@ -62,9 +68,6 @@ function Header({session}) {
                     </Link>
                     <Link href="/about">
                         <li className={`py-[6px] px-3 ${pathName==="/about" ? "bg-gray-900 hover:bg-gray-600" : "hover:bg-gray-600"}`}>About</li>
-                    </Link>
-                    <Link href="/contact">
-                        <li className={`py-[6px] px-3 ${pathName==="/contact" ? "bg-gray-900 hover:bg-gray-600" : "hover:bg-gray-600"}`}>Contact</li>
                     </Link>
                     <Link href="/blogs" >
                         <li className={`py-[6px] px-3 ${pathName==="/blogs" ? "bg-gray-900" : "hover:bg-gray-600"}`}>Blogs</li>
@@ -89,7 +92,10 @@ function Header({session}) {
                                             src={!session?.user?.img ? "https://res.cloudinary.com/dlt4ash36/image/upload/v1700893730/User-Avatar-Profile-Download-PNG-Isolated-Image_mrgemq.png": session?.user?.img}
                                             alt="dp" className="w-full h-full object-cover" />
                                     </div>
-                                    <p className="text-base ml-[5px] max-w-20  overflow-hidden whitespace-nowrap text-ellipsis">{session?.user?.username.charAt(0).toUpperCase() + session?.user.username.slice(1)}</p>
+                                    <p className="text-base ml-[5px] max-w-20  overflow-hidden whitespace-nowrap text-ellipsis">
+                                        {session?.user?.username && session?.user?.username.charAt(0).toUpperCase() + session?.user.username.slice(1)}
+                                        {session?.user?.name && session?.user?.name.charAt(0).toUpperCase() + session?.user.name.slice(1)}
+                                    </p>
                                     {isDropdownVisible ? <FaCaretUp size="22" /> : <FaCaretDown size="22" />}
                                     {isDropdownVisible &&
                                         <ul className="w-[120px] bg-gray-400 text-black rounded-md absolute top-8 z-50 overflow-hidden">

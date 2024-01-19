@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const Home = () => {
   
@@ -13,11 +14,12 @@ const Home = () => {
           of web and software development services.
           </p>
           <div className="flex items-center gap-6">
-            <button className="bg-white hover:bg-slate-200 text-black w-28 py-[5px] rounded-3xl font-semibold">Learn More</button>
-            <button className="bg-blue-800 hover:bg-blue-600 text-white w-28 py-[5px] rounded-3xl font-semibold">Contact</button>
-          </div>
-          <div className="relative w-80 h-[3.4rem]">
-            <Image src="/brands.png" alt="" fill className="grayscale object-cover" />
+            <Link href="/about">
+              <button className="bg-white hover:bg-slate-200 text-black w-28 py-[5px] rounded-3xl font-semibold">Learn More</button>
+            </Link>
+            <Link href="/contact">
+              <button className="bg-blue-800 hover:bg-blue-600 text-white w-28 py-[5px] rounded-3xl font-semibold">Contact</button>
+            </Link>
           </div>
       </div>
       <div className="sm:w-[28rem] sm:h-[25rem] w-80 h-80 relative mx-20 rounded-3xl overflow-hidden">
