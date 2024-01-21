@@ -19,6 +19,7 @@ const Page = async () => {
                     <div className="sm:w-36 sm:h-36 w-20 h-20 relative rounded-full overflow-hidden object-cover">
                         {session?.user?.img && <Image src={session?.user?.img ? session?.user?.img : "/avatar.png"} fill alt="Author-Image" />}
                         {session?.user?.image && <Image src={session?.user?.image ? session?.user?.image : "/avatar.png"} fill alt="Author-Image" />}
+                        {!session?.user?.image && <img src={ "/avatar.png"} fill alt="Author-Image" />}
                     </div>
                     <div className="flex flex-col sm:gap-8 gap-6">
                         <div className="flex sm:flex-row flex-col sm:gap-10 gap-2">
