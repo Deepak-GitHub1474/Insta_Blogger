@@ -50,6 +50,7 @@ export const authConfig = {
             if (isOnAddBlogPage && !user) {
                 return false;
             }
+            
             // ONLY AUTHENTICATED USERS CAN REACH THE PROFILE PAGE
             if (isOnProfilePage && !user) {
                 return false;

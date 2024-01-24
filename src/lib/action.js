@@ -133,7 +133,6 @@ export const deleteUser = async (formData) => {
 }
 
 // Signup
-
 export const signup = async (previousState, formData) => {
     const { username, email, password, confirmPassword, img } = Object.fromEntries(formData);
 
@@ -198,6 +197,12 @@ export const signup = async (previousState, formData) => {
 export const handleGithubLogin = async () => {
     "use server";
     await signIn("github");
+}
+
+// Login using github account
+export const handleGoogleLogin = async () => {
+    "use server";
+    await signIn("google");
 }
 
 // Login using credential
