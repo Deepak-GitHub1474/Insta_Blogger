@@ -53,8 +53,32 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+    }
+}, { timestamps: true });
+
+// Comment Schema
+const commentSchema = mongoose.Schema({
+    userId: {
+        type: String,
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    img: {
+        type: String,
+    },
+    commentText: {
+        type: String,
+        required: true,
+    },
+    postId: {
+        type: String,
+        // required: true,
     },
 }, { timestamps: true });
 
 export const User = mongoose.models?.User || mongoose.model("User", userSchema);
 export const Post = mongoose.models?.Post || mongoose.model("Post", postSchema);
+export const Comment = mongoose.models?.Comment || mongoose.model("Comment", commentSchema);

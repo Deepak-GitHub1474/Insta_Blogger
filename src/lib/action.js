@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { Post, User } from "./models";
+import { Comment, Post, User } from "./models";
 import { connectDb } from "./utils";
 import { signIn, signOut } from "./auth";
 import bcrypt from "bcryptjs";
@@ -31,6 +31,29 @@ export const addBlog = async (prevState, formData) => {
     } catch (error) {
         console.log(error);
         return { error: "Error while adding new blog!" };
+    }
+}
+
+// Add Comments
+export const addComment = async (prevState, formData) => {
+    const { userId, username, img, commentText, postId } = Object.fromEntries(formData);
+    try {
+        const newComment = new Comment({
+            userId,
+            username,
+            img,
+            commentText,
+            postId,
+        });
+
+        await newComment.save();
+        console.log("New comment added to DB");
+        revalidatePath("/blog");
+        revalidatePath("/admin");
+
+    } catch (error) {
+        console.log(error);
+        return { error: "Error while adding new comment!" };
     }
 }
 
@@ -79,7 +102,6 @@ export const updateBlog = async (prevState, formData) => {
         return { error: "Error while updating blog!" };
     }
 };
-
 
 // Add User
 export const addUser = async (previousState, formData) => {

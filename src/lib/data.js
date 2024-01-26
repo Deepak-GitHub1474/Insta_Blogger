@@ -1,4 +1,4 @@
-import { Post, User } from "./models";
+import { Post, User, Comment } from "./models";
 import { connectDb } from "./utils";
 import { unstable_noStore as noStore } from "next/cache";
 
@@ -52,3 +52,15 @@ export const getUser = async (id) => {
         throw new Error("Error while fetching single user!")
     }
 }
+
+// Get Comments
+export const getComments = async () => {
+    try {
+        connectDb();
+        const comments = await Comment.find();
+        return comments;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Error while fetching all comments!");
+    }
+};
