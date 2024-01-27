@@ -37,7 +37,11 @@ export const addBlog = async (prevState, formData) => {
 // Add Comments
 export const addComment = async (prevState, formData) => {
     const { userId, username, img, commentText, postId } = Object.fromEntries(formData);
+    
     try {
+
+        connectDb();
+
         const newComment = new Comment({
             userId,
             username,
@@ -57,6 +61,45 @@ export const addComment = async (prevState, formData) => {
     }
 }
 
+// Like Blog
+export const likeBlog = async (prevState, formData) => {
+    const { userId, postId} = Object.fromEntries(formData);
+
+    try {
+        connectDb();
+
+        const post = await Post.findById(postId);
+
+        if (post.userIdLiked.includes(userId)) {
+            // User has already liked, remove the userId from userIdLiked array and decrement likesCount
+            await Post.updateOne(
+                { _id: postId },
+                {
+                    $pull: { userIdLiked: userId },
+                    $inc: { likesCount: -1 }
+                }
+            );
+        } else {
+            // User is liking for the first time, add userId to userIdLiked array and increment likesCount
+            await Post.updateOne(
+                { _id: postId },
+                {
+                    $push: { userIdLiked: userId },
+                    $inc: { likesCount: 1 }
+                }
+            );
+        }
+
+        revalidatePath("/blog");
+        revalidatePath("/admin");
+        return { success: true };
+
+    } catch (error) {
+        console.log(error);
+        return { error: "Error while liking blog!" };
+    }
+}
+
 // Delete Blog
 export const deleteBlog = async (formData) => {
     const { id } = Object.fromEntries(formData);
@@ -64,6 +107,7 @@ export const deleteBlog = async (formData) => {
     try {
         connectDb();
 
+        await Comment.deleteMany({ postId: id }); // delete all comments related to respective post
         await Post.findByIdAndDelete(id);
         console.log("Blog deleted from DB");
         revalidatePath("/blog");
@@ -84,11 +128,7 @@ export const updateBlog = async (prevState, formData) => {
 
         const updatedPost = await Post.findByIdAndUpdate(
             id,
-            {
-                title,
-                description,
-                img,
-            },
+            { title, description, img, },
             { new: true } // Ensure you get the updated post after the operation
         );
 
@@ -186,15 +226,15 @@ export const signup = async (previousState, formData) => {
         const arrayBuffer = await file.arrayBuffer();
         const buffer = new Uint8Array(arrayBuffer);
         const cloudinaryImgUrl = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream( (error, result) => {
+            cloudinary.uploader.upload_stream((error, result) => {
                 if (error) {
                     reject(error);
                     return;
                 }
-                
+
                 resolve(result);
             })
-            .end(buffer);
+                .end(buffer);
         });
 
         const newUser = new User({

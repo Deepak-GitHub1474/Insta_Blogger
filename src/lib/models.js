@@ -17,8 +17,8 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        // required: true,
-        // min: 8,
+        required: true,
+        min: 8,
     },
     img: {
         type: String,
@@ -53,7 +53,14 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-    }
+    },
+    likesCount: {
+        type: Number,
+        default: 0,
+    },
+    userIdLiked: [{
+        type: String
+    }]
 }, { timestamps: true });
 
 // Comment Schema
@@ -75,9 +82,10 @@ const commentSchema = mongoose.Schema({
     },
     postId: {
         type: String,
-        // required: true,
+        required: true,
     },
 }, { timestamps: true });
+
 
 export const User = mongoose.models?.User || mongoose.model("User", userSchema);
 export const Post = mongoose.models?.Post || mongoose.model("Post", postSchema);
