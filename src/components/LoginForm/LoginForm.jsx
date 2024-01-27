@@ -8,15 +8,16 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
 
-const LoginForm = ({session}) => {
+const LoginForm = ({user}) => {
 
     const [state, formAction] = useFormState(login, undefined);
     const [isLogin, setIsLogin] = useState(false);
     const [isGitLogin, setIsGitLogin] = useState(false);
     const [isGoogleLogin, setIsGoogleLogin] = useState(false);
+    console.log(user);
 
     function isLogging() {
-        if (session) {
+        if (user) {
             setIsLogin(prevIsLogin => !prevIsLogin);
         } 
     }

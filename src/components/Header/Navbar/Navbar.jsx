@@ -1,13 +1,13 @@
-import { auth } from "@/lib/auth";
 import Header from "../Header";
+import { loggedUser } from "@/lib/data";
 
 const Navbar = async () => {
 
-    const session = await auth();
+    const user = await loggedUser();
 
     return (
         <div>
-            <Header session={session} />
+            <Header user={user} />
         </div>
     );
 }

@@ -1,5 +1,4 @@
-import { auth } from "@/lib/auth";
-import { getPosts } from "@/lib/data";
+import { getPosts, loggedUser } from "@/lib/data";
 import Image from "next/image";
 import { TbPhotoVideo } from "react-icons/tb";
 import { FaRegBookmark } from "react-icons/fa";
@@ -8,24 +7,22 @@ import Link from "next/link";
 
 const Page = async () => {
 
-    const session = await auth();
+    const user = await loggedUser();
     const posts = await getPosts();
-    const filterPost = posts.filter(post => post?.userId === session?.user.id);
+    const filterPost = posts.filter(post => post?.userId === user?._id.toString());
 
     return (
         <div className="min-h-[80vh] bg-gray-900 text-white py-4">
             <div className="flex flex-col sm:gap-12 gap-6">
                 <div className="flex sm:items-center justify-center sm:gap-24 gap-6 pb-4">
                     <div className="sm:w-36 sm:h-36 w-20 h-20 relative rounded-full overflow-hidden object-cover">
-                        {session?.user?.img && <Image src={session?.user?.img ? session?.user?.img : "/avatar.png"} fill alt="Author-Image" />}
-                        {session?.user?.image && <Image src={session?.user?.image ? session?.user?.image : "/avatar.png"} fill alt="Author-Image" />}
-                        {!session?.user?.image && <img src={ "/avatar.png"} fill alt="Author-Image" />}
+                        {user?.img && <Image src={user?.img ? user?.img : "/avatar.png"} fill alt="Author-Image" />}
+                        {!user?.image && <img src={ "/avatar.png"} fill alt="Author-Image" />}
                     </div>
                     <div className="flex flex-col sm:gap-8 gap-6">
                         <div className="flex sm:flex-row flex-col sm:gap-10 gap-2">
                             <h3 className="font-semibold text-lg max-w-48 overflow-hidden whitespace-nowrap text-ellipsis">
-                                {session?.user?.username && session?.user?.username[0].toUpperCase()+session?.user?.username.slice(1)}
-                                {session?.user?.name && session?.user?.name[0].toUpperCase()+session?.user?.name.slice(1)}
+                                {user?.username && user?.username[0].toUpperCase()+user?.username.slice(1)}
                             </h3>
                             <button className="bg-gray-700 hover:bg-gray-500 max-w-48 text-sm py-1 sm:px-6 rounded-md">Edit Profile</button>
                         </div>

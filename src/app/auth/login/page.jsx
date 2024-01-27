@@ -1,12 +1,14 @@
 import LoginForm from "@/components/LoginForm/LoginForm";
-import { auth } from "@/lib/auth";
+
+import { loggedUser } from "@/lib/data";
 
 const Login = async () => {
-    const session = await auth();
+    
+    const user = await loggedUser();
 
     return (
         <div className="min-h-[80vh] bg-gray-900 text-white flex items-center justify-center p-2">
-            <LoginForm session={session}/>
+            <LoginForm user={user}/>
         </div>
     );
 }

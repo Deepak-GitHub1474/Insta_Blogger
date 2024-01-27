@@ -76,7 +76,7 @@ export const {
             return false;
           }
         }
-        // console.log("Profile====>",profile);
+        
         if (account.provider === "google") {
           connectDb();
           try {

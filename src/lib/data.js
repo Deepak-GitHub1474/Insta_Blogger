@@ -1,3 +1,4 @@
+import { auth } from "./auth";
 import { Post, User, Comment } from "./models";
 import { connectDb } from "./utils";
 import { unstable_noStore as noStore } from "next/cache";
@@ -64,3 +65,21 @@ export const getComments = async () => {
         throw new Error("Error while fetching all comments!");
     }
 };
+
+// Get Logged User
+
+export const loggedUser = async () => {
+    // filter user to double check and ensure user exist in DB.
+
+    try {
+        connectDb();
+        const users = await User.find();
+        const session = await auth();
+        const loggedUser = users.filter(user => user?.email === session?.user?.email);
+        const user = loggedUser[0];
+        return user;
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error while fetching all users!");
+    }
+}

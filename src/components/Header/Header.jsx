@@ -6,8 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {FaCaretDown, FaCaretUp } from "react-icons/fa";
 
-function Header({session}) {
-    // console.log("Session===>",session);
+function Header({user}) {
+
     const [isNavVisible, setIsNavVisible] = useState(false);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const pathName = usePathname();
@@ -51,13 +51,11 @@ function Header({session}) {
                 <ul className={`${isNavVisible ? "flex flex-col gap-3 text-lg" : "flex items-center justify-center gap-3 text-lg"}`}>
                     <Link href="/profile" className="lg:hidden flex relative group max-w-fit">
                         <div className={`w-16 h-16 rounded-full overflow-hidden hover:scale-[1.1] transition-all hover:border-2 border-blue-700 ${pathName==="/profile" && "border-2 border-gray-900 hover:border-blue-700"}`}>
-                            {session?.user?.img && <img src={session?.user?.img ? session?.user?.img : "/avatar.png"} fill alt="Author-Image" />}
-                            {session?.user?.image && <img src={session?.user?.image ? session?.user?.image : "/avatar.png"} fill alt="Author-Image" />}
-                            {!session?.user?.image && <img src={ "/avatar.png"} fill alt="Author-Image" />}
+                            {user?.img && <img src={user?.img ? user?.img : "/avatar.png"} fill alt="Author-Image" />}
+                            {!user?.img && <img src={ "/avatar.png"} fill alt="Author-Image" />}
                         </div>
                         <p className="text-base ml-[5px] absolute left-14 top-0 z-50 bg-gray-900 max-w-60 py-[2px] px-4 overflow-hidden whitespace-nowrap text-ellipsis opacity-0 group-hover:opacity-100 transition-opacity">
-                            {session?.user?.username && session?.user?.username}
-                            {session?.user?.name && session?.user?.name}
+                            {user?.username && user?.username}
                         </p>
                     </Link>
                     <Link href="/">
@@ -72,9 +70,9 @@ function Header({session}) {
                     <Link href="/addblog" >
                         <li className={`py-[6px] px-3 ${pathName==="/addblog" ? "bg-gray-900" : "hover:bg-gray-600"}`}>Add Blog</li>
                     </Link>
-                    {session?.user ?
+                    {user ?
                         <div  className={`${isNavVisible ? " flex flex-col gap-3 text-lg" : "flex items-center justify-center gap-8 text-lg"}`}>
-                            {session.user?.isAdmin &&  
+                            {user?.isAdmin &&  
                             <Link href="/admin">
                                 <button className="bg-blue-800 w-full hover:hover:bg-blue-600 py-[6px] px-3">Admin</button>
                             </Link>
@@ -85,13 +83,11 @@ function Header({session}) {
                             <div className="hidden lg:flex">
                                 <div className="bg-gray-900 h-9 max-w-fit pr-2 flex items-center gap-[6px] cursor-pointer rounded-[40px] relative" onClick={toggleDropdown}>
                                     <div className="w-9 h-9 rounded-full overflow-hidden">
-                                        {session?.user?.img && <img src={session?.user?.img ? session?.user?.img : "/avatar.png"} fill alt="Author-Image" />}
-                                        {session?.user?.image && <img src={session?.user?.image ? session?.user?.image : "/avatar.png"} fill alt="Author-Image" />}
-                                        {!session?.user?.image && <img src={ "/avatar.png"} fill alt="Author-Image" />}
+                                        {user?.img && <img src={user?.img ? user?.img : "/avatar.png"} fill alt="Author-Image" />}
+                                        {!user?.image && <img src={ "/avatar.png"} fill alt="Author-Image" />}
                                     </div>
                                     <p className="text-base ml-[5px] max-w-20  overflow-hidden whitespace-nowrap text-ellipsis">
-                                        {session?.user?.username && session?.user?.username}
-                                        {session?.user?.name && session?.user?.name}
+                                        {user?.username && user?.username}
                                     </p>
                                     {isDropdownVisible ? <FaCaretUp size="22" /> : <FaCaretDown size="22" />}
                                     {isDropdownVisible &&

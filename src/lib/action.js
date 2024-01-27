@@ -197,7 +197,7 @@ export const deleteUser = async (formData) => {
 // Signup
 export const signup = async (previousState, formData) => {
     const { username, email, password, confirmPassword, img } = Object.fromEntries(formData);
-
+    
     if (password !== confirmPassword) {
         console.log("password & confirmPassword do not match!");
         return { error: "password & confirmPassword do not match!" };
@@ -261,7 +261,7 @@ export const handleGithubLogin = async () => {
     await signIn("github");
 }
 
-// Login using github account
+// Login using google account
 export const handleGoogleLogin = async () => {
     "use server";
     await signIn("google");

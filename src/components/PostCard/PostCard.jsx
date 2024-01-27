@@ -10,7 +10,7 @@ import { useFormState } from "react-dom";
 
 import {FaRegHeart, FaHeart, FaRegComment} from "react-icons/fa";
 
-const PostCard = ({posts, users, comments, session}) => {
+const PostCard = ({posts, users, comments, user}) => {
 
     const [isOpen, setIsOpen] = useState(null);
     const [likedBlogs, setLikedBlogs] = useState([]);
@@ -60,16 +60,16 @@ const PostCard = ({posts, users, comments, session}) => {
     <>
       {posts.map(blog => (
             <div className="flex items-center justify-center flex-col" key={blog._id}>
-                <div className=" max-w-[550px] w-[90vw] h-[500px] bg-gray-700 text-white my-4 p-4 pt-0 rounded-lg relative overflow-hidden shadow-[0_5px_5px_white]">
+                <div className=" max-w-[550px] w-[90vw] h-[500px] bg-gray-700 text-white my-4 p-4 pt-0 rounded-lg relative overflow-hidden shadow-[0_5px_5px_white] hover:shadow-[0_5px_5px_#0000ff] transition-all duration-300">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1 mt-1">
                             <div className="relative w-[2rem] h-[2rem] rounded-full overflow-hidden">
-                                <img src={users.filter(user =>  user._id === blog.userId).map(user => user.img)} fill alt="post-cover" className="object-cover"/>
+                                <img src={users.filter(user =>  user?._id === blog?.userId).map(user => user?.img)} fill alt="post-cover" className="object-cover"/>
                             </div>
-                            <div>{users.filter(user =>  user._id === blog.userId).map(user => user.username)}</div>
+                            <div>{users.filter(user =>  user?._id === blog?.userId).map(user => user?.username)}</div>
                             <div className="w-[5px] h-[5px] rounded-full bg-gray-400 mt-1"></div>
                         </div>
-                        {session?.user?.id === blog.userId && 
+                        {user?._id === blog.userId && 
                         <div className="cursor-pointer flex gap-[6px] p-1" onClick={() => handleClick(blog._id)}>
                             <div className="w-2 h-2 rounded-full bg-white"></div>
                             <div className="w-2 h-2 rounded-full bg-white"></div>
@@ -104,10 +104,10 @@ const PostCard = ({posts, users, comments, session}) => {
                         <div className="flex flex-col items-center text-gray-400 w-1/2">
                             
                             <form action={likeFormAction} >
-                                <input type="hidden" name="userId" value={session?.user?.id}/>
+                                <input type="hidden" name="userId" value={user?._id}/>
                                 <input type="hidden" name="postId" value={blog?._id}/>
                                 <button>
-                                    {!blog?.userIdLiked.includes(session?.user?.id) ? (
+                                    {!blog?.userIdLiked.includes(user?._id) ? (
                                         <FaRegHeart
                                                 size="28"
                                                 color="#fff"
@@ -194,12 +194,12 @@ const PostCard = ({posts, users, comments, session}) => {
                                     <section className="absolute left-0 right-0 bottom-0 pl-3">
                                         <div className="flex items-center gap-2 p-1 text-sm">
                                             <div className="relative w-[2rem] h-[2rem] rounded-full overflow-hidden border-[0.5px] border-gray-400 mt-1">
-                                                <img src={session?.user?.img ? session?.user?.img : "/avatar.png"} fill alt="post-cover" className="object-cover"/>
+                                                <img src={user?.img ? user?.img : "/avatar.png"} fill alt="post-cover" className="object-cover"/>
                                             </div>
                                             <form action={commentFormAction}>
-                                                <input type="hidden" name="userId" value={session?.user?.id}/>
-                                                <input type="hidden" name="username" value={session?.user?.username}/>
-                                                <input type="hidden" name="img" value={session?.user?.img}/>
+                                                <input type="hidden" name="userId" value={user?._id}/>
+                                                <input type="hidden" name="username" value={user?.username}/>
+                                                <input type="hidden" name="img" value={user?.img}/>
                                                 <input type="hidden" name="postId" value={blog?._id}/>
                                                 <input 
                                                     type="text" 
