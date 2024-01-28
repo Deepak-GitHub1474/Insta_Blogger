@@ -14,7 +14,7 @@ const Blog = async () => {
     const user = await loggedUser();
 
     return (
-        <div className="min-h-[80vh] bg-gray-900">
+        <div className="min-h-[80vh] bg-gray-900 pb-10">
             <PostCard 
                 posts = {posts}
                 users = {users}
