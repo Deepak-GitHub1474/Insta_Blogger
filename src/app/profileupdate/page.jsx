@@ -4,7 +4,7 @@ import UpdateUserProfile from '@/components/UpdateUserProfile/UpdateUserProfile'
 const Page = async () => {
     const user = await loggedUser();
     return (
-        <UpdateUserProfile userId={user?._id}/>
+        <UpdateUserProfile user={user}/>
     );
 }
 
