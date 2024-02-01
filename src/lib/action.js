@@ -7,6 +7,33 @@ import { signIn, signOut } from "./auth";
 import bcrypt from "bcryptjs";
 import { v2 as cloudinary } from 'cloudinary';
 
+// Handle image upload on cloudinary
+const uploadImageCloudinary = async (img) => {
+    
+    cloudinary.config({
+        cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+
+    const file = img;
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+    const cloudinaryImgUrl = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream((error, result) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            resolve(result);
+        })
+            .end(buffer);
+    });
+
+    return cloudinaryImgUrl
+}
+
 // Add blog
 export const addBlog = async (prevState, formData) => {
 
@@ -143,6 +170,40 @@ export const updateBlog = async (prevState, formData) => {
     }
 };
 
+// Update Profile Info
+export const updateProfile = async (prevState, formData) => {
+    const {userId, img, username, bio} = Object.fromEntries(formData);
+    
+    if (username.length < 3 || username.length > 10 ) {
+        return { error: "username must be minimum 3 or maximum 10 characters long!" };
+    }
+
+    try {
+        connectDb();
+
+        let updatedFields = { username, bio };
+
+        if (img.size !== 0) {
+            const cloudinaryImgUrl = await uploadImageCloudinary(img);
+            updatedFields.img = cloudinaryImgUrl?.secure_url;
+        }
+
+        let user = await User.findByIdAndUpdate(
+            userId,
+            updatedFields,
+            { new: true }
+        );
+
+        console.log("Profile updated", user);
+        revalidatePath("/profile");
+        return { success: true };
+
+    } catch (error) {
+        console.log(error);
+        return {error: "Error while updating profile info"}
+    }
+}
+
 // Add User
 export const addUser = async (previousState, formData) => {
     const { username, email, password, img } = Object.fromEntries(formData);
@@ -216,26 +277,7 @@ export const signup = async (previousState, formData) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        cloudinary.config({
-            cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-            api_key: process.env.CLOUDINARY_API_KEY,
-            api_secret: process.env.CLOUDINARY_API_SECRET,
-        });
-
-        const file = img;
-        const arrayBuffer = await file.arrayBuffer();
-        const buffer = new Uint8Array(arrayBuffer);
-        const cloudinaryImgUrl = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream((error, result) => {
-                if (error) {
-                    reject(error);
-                    return;
-                }
-
-                resolve(result);
-            })
-                .end(buffer);
-        });
+        const cloudinaryImgUrl = await uploadImageCloudinary(img);
 
         const newUser = new User({
             username: username,

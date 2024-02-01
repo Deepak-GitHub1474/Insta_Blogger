@@ -24,7 +24,9 @@ const Page = async () => {
                             <h3 className="font-semibold text-lg max-w-48 overflow-hidden whitespace-nowrap text-ellipsis">
                                 {user?.username && user?.username[0].toUpperCase()+user?.username.slice(1)}
                             </h3>
-                            <button className="bg-gray-700 hover:bg-gray-500 max-w-48 text-sm py-1 sm:px-6 rounded-md">Edit Profile</button>
+                            <Link href="/profileupdate" className="bg-gray-700 hover:bg-gray-500 text-sm py-1 sm:px-6 rounded-md text-center">
+                                <button>Edit Profile</button>
+                            </Link>
                         </div>
                         <div className="sm:flex gap-10 hidden">
                             <span>{`${filterPost.length} posts`}</span>

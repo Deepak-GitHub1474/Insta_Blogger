@@ -28,6 +28,11 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    bio: {
+        type: String,
+        default: "Your bio ❤️",
+        max: 30
+    }
 }, { timestamps: true });
 
 // Post Schema
