@@ -5,11 +5,13 @@ import { handleLogout } from "@/lib/action";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {FaCaretDown, FaCaretUp } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function Header({user}) {
 
     const [isNavVisible, setIsNavVisible] = useState(false);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const [loading, setLoading] = useState(null);
     const pathName = usePathname();
 
     // Handle Navbar Size
@@ -24,6 +26,7 @@ function Header({user}) {
             }
         }
         setIsNavVisible(false);
+        setLoading(false);
 
         window.addEventListener('resize', handleResize);
 
@@ -49,36 +52,44 @@ function Header({user}) {
 
             <div className={`${isNavVisible ? "absolute left-5 top-[5rem] right-7" : "absolute top-3 right-7 lg:block hidden"}`}>
                 <ul className={`${isNavVisible ? "flex flex-col gap-3 text-lg" : "flex items-center justify-center gap-3 text-lg"}`}>
-                    <Link href="/profile" className="lg:hidden flex relative group max-w-fit">
+                    {user && <Link href="/profile" className="lg:hidden flex relative group max-w-fit">
                         <div className={`w-16 h-16 rounded-full overflow-hidden hover:scale-[1.1] transition-all hover:border-2 border-blue-700 ${pathName==="/profile" && "border-2 border-gray-900 hover:border-blue-700"}`}>
                             {user?.img && <img src={user?.img ? user?.img : "/avatar.png"} fill alt="Author-Image" />}
-                            {!user?.img && <img src={ "/avatar.png"} fill alt="Author-Image" />}
                         </div>
                         <p className="text-base ml-[5px] absolute left-14 top-0 z-50 bg-gray-900 max-w-60 py-[2px] px-4 overflow-hidden whitespace-nowrap text-ellipsis opacity-0 group-hover:opacity-100 transition-opacity">
                             {user?.username && user?.username}
                         </p>
-                    </Link>
+                    </Link>}
                     <Link href="/">
-                        <li className={`py-[6px] px-3 ${pathName==="/" ? "bg-gray-900 hover:bg-gray-600" : "hover:bg-gray-600"}`}>Home</li>
-                    </Link>
-                    <Link href="/about">
-                        <li className={`py-[6px] px-3 ${pathName==="/about" ? "bg-gray-900 hover:bg-gray-600" : "hover:bg-gray-600"}`}>About</li>
+                        <li className={`py-[6px] px-6 ${pathName==="/" ? "bg-gray-900 hover:bg-gray-600" : "hover:bg-gray-600"}`}>
+                            Home
+                        </li>
                     </Link>
                     <Link href="/blogs" >
-                        <li className={`py-[6px] px-3 ${pathName==="/blogs" ? "bg-gray-900" : "hover:bg-gray-600"}`}>Blogs</li>
+                        <li className={`py-[6px] px-6 ${pathName==="/blogs" ? "bg-gray-900" : "hover:bg-gray-600"}`}>
+                            Blogs
+                        </li>
                     </Link>
                     <Link href="/addblog" >
-                        <li className={`py-[6px] px-3 ${pathName==="/addblog" ? "bg-gray-900" : "hover:bg-gray-600"}`}>Add Blog</li>
+                        <li className={`py-[6px] px-6 ${pathName==="/addblog" ? "bg-gray-900" : "hover:bg-gray-600"}`}>
+                            Add Blog
+                        </li>
                     </Link>
                     {user ?
                         <div  className={`${isNavVisible ? " flex flex-col gap-3 text-lg" : "flex items-center justify-center gap-8 text-lg"}`}>
                             {user?.isAdmin &&  
                             <Link href="/admin">
-                                <button className="bg-blue-800 w-full hover:hover:bg-blue-600 py-[6px] px-3">Admin</button>
+                                <button className="bg-blue-800 w-full hover:hover:bg-blue-600 py-[6px] px-6 relative flex items-center justify-center" onClick={() => setLoading("admin")}>
+                                    <span>Admin</span>
+                                    {pathName !== "/admin" && loading === "admin" && <AiOutlineLoading3Quarters className={`ml-24 w-4 h-4 animate-spin absolute bottom-3 ${!isNavVisible && "right-1"}`}/>}
+                                </button>
                             </Link>
                             }
                             <form action={handleLogout}>
-                                <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3">Logout</button>
+                                <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-6 relative flex items-center justify-center" onClick={() => setLoading("logout")}>
+                                    <span>Logout</span>
+                                    {loading === "logout" && <AiOutlineLoading3Quarters className={`ml-24 w-4 h-4 animate-spin absolute bottom-3 ${!isNavVisible && "right-1"}`} />}
+                                </button>
                             </form>
                             <div className="hidden lg:flex">
                                 <div className="bg-gray-900 h-9 max-w-fit pr-2 flex items-center gap-[6px] cursor-pointer rounded-[40px] relative" onClick={toggleDropdown}>
@@ -103,10 +114,16 @@ function Header({user}) {
                         </div> :
                         <>
                             <Link href="/auth/login">
-                                <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3 text-center">LogIn</button>
+                                <button className="bg-blue-900 w-full hover:hover:bg-blue-600 py-[6px] px-3 relative flex items-center justify-center" onClick={() => setLoading("login")}>
+                                    <span>LogIn</span>
+                                    {pathName !== "/auth/login" && loading === "login" && <AiOutlineLoading3Quarters className={`ml-24 w-4 h-4 animate-spin absolute bottom-3 ${!isNavVisible && "right-1"}`}/>}
+                                </button>
                             </Link>
                             <Link href="/auth/register">
-                                <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3 text-center">SignUp</button>
+                                <button className="bg-gray-900 w-full hover:hover:bg-gray-600 py-[6px] px-3 relative flex items-center justify-center" onClick={() => setLoading("signUp")}>
+                                    <span>SignUp</span>
+                                    {pathName !== "/auth/register" && loading === "signUp" && <AiOutlineLoading3Quarters className={`ml-24 w-4 h-4 animate-spin absolute bottom-3 ${!isNavVisible && "right-1"}`}/>}
+                                </button>
                             </Link>
                         </>
                     }

@@ -24,8 +24,8 @@ const SignupForm = () => {
     const router = useRouter();
 
     useEffect(() => {
-        state?.success && router.push("/auth/login");
         state?.success && toast.success("Signup Successfully");
+        state?.success && router.push("/auth/login");
     }, [state?.success, router]);
 
     // Converting image base64

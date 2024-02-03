@@ -38,7 +38,7 @@ const UpdateUserProfile = ({user}) => {
 
     // Push to profile page on successfull action
     useEffect(() => {
-        // state?.success && setLoading(true);
+        state?.success && setLoading(true);
         state?.success && toast.success("Profile Updated Successfully");
         state?.success && router.push("/profile");
     }, [state?.success, router]);
@@ -72,7 +72,7 @@ const UpdateUserProfile = ({user}) => {
             <Link href="/profile" className="w-fit py-1 px-2 rounded-md text-center bg-blue-600 hover:bg-blue-500 absolute top-4 right-4 flex items-center gap-4"> 
                 <span className="font-semibold">GO TO PROFILE</span>
                 <div className="w-6 h-6 relative rounded-full overflow-hidden object-cover animate-pulse">
-                    <Image fill src={user?.img} />
+                    <Image fill src={user?.img ? user?.img : "/avatar.png"} />
                 </div>
             </Link>
             <form action={formAction} className="flex flex-col gap-4 sm:w-[500px] w-[95vw] pb-4 pt-4 px-2 rounded-lg shadow-[0_5px_5px_white] relative overflow-hidden">
@@ -87,7 +87,7 @@ const UpdateUserProfile = ({user}) => {
                         <AiOutlineLoading3Quarters className="w-20 h-20 animate-spin" />
                         ) : (
                             <div className="w-20 h-20 relative rounded-full overflow-hidden object-cover">
-                                <Image fill src={user?.img} />
+                                <Image fill src={user?.img ? user?.img : "/avatar.png"} />
                             </div>
                         )}
                     </>

@@ -258,10 +258,22 @@ export const deleteUser = async (formData) => {
 // Signup
 export const signup = async (previousState, formData) => {
     const { username, email, password, confirmPassword, img } = Object.fromEntries(formData);
-    
+
     if (password !== confirmPassword) {
         console.log("password & confirmPassword do not match!");
         return { error: "password & confirmPassword do not match!" };
+    }
+
+    if (username.length < 3 || username.length > 10 ) {
+        return { error: "username must be minimum 3 or maximum 10 characters long!" };
+    }
+
+    if (!email) {
+        return { error: "Email is required!" };
+    }
+
+    if (!password) {
+        return { error: "Please enter your password!" };
     }
 
     try {
@@ -277,17 +289,17 @@ export const signup = async (previousState, formData) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const cloudinaryImgUrl = await uploadImageCloudinary(img);
+        const userInputs = { username:username, email:email, password:hashedPassword }
 
-        const newUser = new User({
-            username: username,
-            email: email,
-            password: hashedPassword,
-            img: cloudinaryImgUrl?.secure_url
-        });
+        if (img.size !==0) {
+            const cloudinaryImgUrl = await uploadImageCloudinary(img);
+            userInputs.img = cloudinaryImgUrl?.secure_url;
+        }
+
+        const newUser = new User(userInputs);
 
         await newUser.save();
-        console.log("New user added!");
+        console.log("New user added!", newUser);
         revalidatePath("/auth/register");
         return { success: true };
 

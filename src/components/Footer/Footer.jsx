@@ -8,21 +8,10 @@ const Footer = () => {
   return (
     <footer className="bg-[#1b2124] min-h-[10vh] text-gray-400 p-4">
 
-        <div className="flex items-center justify-center xl:items-baseline xl:flex-row flex-col sm:gap-10 gap-5">
+        <div className="flex items-center justify-center lg:items-baseline lg:flex-row flex-col sm:gap-10 gap-5">
 
             <div className="flex items-center justify-center mr-10">
                 <Image width={250} height={250} src="/logo.png" alt="pw-logo" />
-            </div>
-
-            <div className="flex flex-col gap-5 pb-5">
-                <div className="flex flex-col gap-3">
-                    <h1 className="text-[#ffffff] font-semibold text-xl">Contact</h1>
-                    <div className="border-[#0000ff] border-[2.4px] rounded-lg w-[16rem]"></div>
-                </div>
-                <div className="flex flex-col gap-5">
-                    <p>support@instablogger.com</p>
-                    <p>+91-7666122288</p>
-                </div>
             </div>
 
             <div className="flex flex-col gap-5">
