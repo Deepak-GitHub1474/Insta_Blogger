@@ -13,7 +13,7 @@ const LandingPage = () => {
                 </p>
             </div>
         <div className="xl:w-[28rem] xl:h-[25rem] w-80 h-80 relative rounded-full rounded-tl-[70%] rounded-tr-[70%] rounded-br-[70%] rounded-bl-[30%] overflow-hidden shadow-[0_10px_10px_#0000ff]">
-            <Image src="https://cdn.dribbble.com/users/795597/screenshots/3574014/social_network__3_.gif" alt="" fill />
+            <Image src="https://res.cloudinary.com/dlt4ash36/image/upload/v1706968075/social_network__3__as5ewn.gif" alt="" fill />
         </div>
         </section>
 
@@ -28,21 +28,21 @@ const LandingPage = () => {
                 <div className="flex flex-col gap-8">
                     
                     <div className="md:w-[460px] xl:w-[250px] 2xl:w-[350px] p-4 rounded-lg bg-[#c8f5d2] hover:bg-[#bffccd] shadow-[0_5px_10px_#0000ff] hover:shadow-[0_10px_10px_#0000ff]">
-                        <Image width={52} height={52} src="/products-icon1.png" alt="products-icon1" />
+                        <Image width={52} height={52} src="https://res.cloudinary.com/dlt4ash36/image/upload/v1706968586/create_herxqt.png" alt="products-icon1" />
                         <h1 className="font-bold text-xl my-4">InstaBlogger Creation</h1>
                         <h2 className="text-lg font-extralight text-[#000]">Elevate your voice share your thoughts, stories, and ideas effortlessly. </h2>
                     </div>
 
                     <div className="md:w-[460px] xl:w-[250px] 2xl:w-[350px] p-4 rounded-lg bg-[#f7bdef] hover:bg-[#f8a3ed] shadow-[0_5px_10px_#0000ff] hover:shadow-[0_10px_10px_#0000ff]"
                         >
-                        <Image width={52} height={52} src="/products-icon2.png" alt="products-icon1" />
+                        <Image width={52} height={52} src="https://res.cloudinary.com/dlt4ash36/image/upload/v1706968587/update_aeqp8y.png" alt="products-icon1" />
                         <h1 className="font-bold text-xl py-4">InstaBlogger Updation</h1>
                         <h2 className="text-lg font-extralight text-[#000]">Experience the freedom to seamlessly edit your posts with updation feature.</h2>
                     </div>
                     
                     <div className="md:w-[460px] xl:w-[250px] 2xl:w-[350px] p-4 rounded-lg bg-[#f79393] hover:bg-[#fd7777] shadow-[0_5px_10px_#0000ff] hover:shadow-[0_10px_10px_#0000ff]"
                         >
-                        <Image width={52} height={52} src="/products-icon3.png" alt="products-icon1" />
+                        <Image width={52} height={52} src="https://res.cloudinary.com/dlt4ash36/image/upload/v1706968586/delete_fq57zq.png" alt="products-icon1" />
                         <h1 className="font-bold text-xl py-4">InstaBlogger Deletion</h1>
                         <h2 className="text-lg font-extralight text-[#000]">Experience the freedom to seamlessly delete your posts with deletion feature.</h2>
                     </div>
@@ -53,14 +53,14 @@ const LandingPage = () => {
                     <div className="md:w-[460px] xl:w-[250px] 2xl:w-[350px] p-4 rounded-lg bg-[#f3f3ba] hover:bg-[#fbfba7] shadow-[0_5px_10px_#0000ff] hover:shadow-[0_10px_10px_#0000ff]"
                         >
 
-                        <Image width={52} height={52} src="/products-icon4.png" alt="products-icon1" />
+                        <Image width={52} height={52} src="https://res.cloudinary.com/dlt4ash36/image/upload/v1706968586/like_eywcwp.png" alt="products-icon1" />
                         <h1 className="font-bold text-xl py-4">InstaBlogger Like & Unlike </h1>
                         <h2 className="text-lg font-extralight text-[#000]">Express your appreciation by liking the blogs or also unlike anytime.</h2>
                     </div>
                     
                     <div className="md:w-[460px] xl:w-[250px] 2xl:w-[350px] p-4 rounded-lg bg-[#88ddde] hover:bg-[#5af5f2] shadow-[0_5px_10px_#0000ff] hover:shadow-[0_10px_10px_#0000ff]"
                     >
-                        <Image width={52} height={52} src="/products-icon5.png" alt="products-icon1" />
+                        <Image width={52} height={52} src="https://res.cloudinary.com/dlt4ash36/image/upload/v1706968585/comment_c8tnca.png" alt="products-icon1" />
                         <h1 className="font-bold text-xl py-4">InstaBlogger Comment</h1>
                         <h2 className="text-lg font-extralight text-[#000]">Express your views on blogs by commenting your thoughts.</h2>
                     </div>
