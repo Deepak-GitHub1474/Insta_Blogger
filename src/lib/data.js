@@ -42,7 +42,7 @@ export const getUsers = async () => {
 // Get single user
 export const getUser = async (id) => {
     
-    noStore();  // Not cashed to get the refresh data
+    // noStore();  // Not cashed to get the refresh data
 
     try {
         connectDb();
@@ -67,7 +67,6 @@ export const getComments = async () => {
 };
 
 // Get Logged User
-
 export const loggedUser = async () => {
     // filter user to double check and ensure user exist in DB.
 

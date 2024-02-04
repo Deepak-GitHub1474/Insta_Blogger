@@ -50,9 +50,9 @@ export const addBlog = async (prevState, formData) => {
             slug,
         });
         await newPost.save();
-        console.log("New blog added to DB");
-        revalidatePath("/blog");
-        revalidatePath("/admin");
+        // console.log("New blog added to DB");
+        // revalidatePath("/blog");
+        // revalidatePath("/admin");
         return { success: true };
 
     } catch (error) {
@@ -78,9 +78,9 @@ export const addComment = async (prevState, formData) => {
         });
 
         await newComment.save();
-        console.log("New comment added to DB");
-        revalidatePath("/blog");
-        revalidatePath("/admin");
+        // console.log("New comment added to DB");
+        // revalidatePath("/blog");
+        // revalidatePath("/admin");
 
     } catch (error) {
         console.log(error);
@@ -117,8 +117,8 @@ export const likeBlog = async (prevState, formData) => {
             );
         }
 
-        revalidatePath("/blog");
-        revalidatePath("/admin");
+        // revalidatePath("/blog");
+        // revalidatePath("/admin");
         return { success: true };
 
     } catch (error) {
@@ -136,9 +136,9 @@ export const deleteBlog = async (formData) => {
 
         await Comment.deleteMany({ postId: id }); // delete all comments related to respective post
         await Post.findByIdAndDelete(id);
-        console.log("Blog deleted from DB");
-        revalidatePath("/blog");
-        revalidatePath("/admin");
+        // console.log("Blog deleted from DB");
+        // revalidatePath("/blog");
+        // revalidatePath("/admin");
 
     } catch (error) {
         console.log(error);
@@ -160,9 +160,8 @@ export const updateBlog = async (prevState, formData) => {
         );
 
         //console.log("Blog updated:", updatedPost);
-        console.log("Blog updated");
-        revalidatePath("/blog");
-        revalidatePath("/admin");
+        // revalidatePath("/blog");
+        // revalidatePath("/admin");
         return { success: true };
     } catch (error) {
         console.log(error);
@@ -194,8 +193,8 @@ export const updateProfile = async (prevState, formData) => {
             { new: true }
         );
 
-        console.log("Profile updated", user);
-        revalidatePath("/profile");
+        // console.log("Profile updated", user);
+        // revalidatePath("/profile");
         return { success: true };
 
     } catch (error) {
@@ -229,8 +228,8 @@ export const addUser = async (previousState, formData) => {
         });
 
         await newUser.save();
-        console.log("New user added!");
-        revalidatePath("/admin");
+        // console.log("New user added!");
+        // revalidatePath("/admin");
 
     } catch (error) {
         console.log(error);
@@ -246,8 +245,8 @@ export const deleteUser = async (formData) => {
 
         await Post.deleteMany({ userId: id });
         await User.findByIdAndDelete(id);
-        console.log("User deleted from DB");
-        revalidatePath("/admin");
+        // console.log("User deleted from DB");
+        // revalidatePath("/admin");
 
     } catch (error) {
         console.log(error);
@@ -299,8 +298,8 @@ export const signup = async (previousState, formData) => {
         const newUser = new User(userInputs);
 
         await newUser.save();
-        console.log("New user added!", newUser);
-        revalidatePath("/auth/register");
+        // console.log("New user added!", newUser);
+        // revalidatePath("/auth/register");
         return { success: true };
 
     } catch (error) {
